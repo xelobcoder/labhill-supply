@@ -1,0 +1,75 @@
+<%- include("header.ejs") %> 
+<body>
+ <div class="container-fluid bg-primary p-4">
+  <div class="container">
+   <div class="row">
+    <div class="col-10">
+     add new product
+    </div>
+    <div class="col">
+      <button class="btn btn-primary"  
+      id="btn-view-products">view products</button>
+    </div>
+   </div>
+  </div>
+ </div>
+ <div class="container-fluid">
+  <div class="container">
+   <div class="row">
+    <div class="col">
+     <div id="message-field" class="alert">
+       
+     </div>
+    <form>
+     <div class="form-row">
+      <!-- product name -->
+     <div class="form-group">
+      <label for="">product name</label>
+      <input class="form-control" type="text" id="name" required />
+     </div>
+     </div>
+      <!-- product description -->
+      <div class="form-row">
+       <div class="form-group">
+        <label for="">description</label>
+        <textarea type="text" class="form-control"  required id="description" rows="5"></textarea>
+       </div>
+      </div>
+      <!-- product quantity  -->
+      <div class="form-row">
+       <div class="form-group">
+        <label for="">quantity</label>
+        <input  type="number" min="0" class="form-control" required id="quantity"/>
+       </div>
+      </div>
+      
+      <!-- product price -->
+      <div class="form-row">
+        <div class="form-group">
+          <div class="label">price</div>
+          <input class="form-control" id="price" min="0" required/>
+        </div>
+      </div>
+      <!-- product image -->
+      <div class="form-row">
+       <div class="form-group">
+        <label for="">image</label>
+        <input class="form-control" id="image" type="file" placeholder="image"  required  />
+       </div>
+      </div>
+
+      <!-- button  -->
+
+      <div class="form-row">
+       <div class="form-group">
+        <button type="button" id="product-button" class="btn btn-primary p-2 mt-3" style="width: 10%;">save</button>
+       </div>
+      </div>
+    </form>
+    </div>
+   </div>
+  </div>
+ </div>
+ <script src="/nproduct.js"></script>
+ <!-- <script src ="/global.js"></script> -->
+</body>

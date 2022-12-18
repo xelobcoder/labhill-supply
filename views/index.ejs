@@ -1,0 +1,36 @@
+<%- include('header.ejs') %> 
+<body class="by-body">
+ <div class="container-fluid bg-dark p-3">
+  <div class="container">
+   <div class="row">
+    <div class="col">
+     <div class="text-lead">
+      <h4 class="text-capitalize text-lead text-white">lahill supply
+      </h4>
+     </div>
+    </div>
+   </div>
+  </div>
+ </div>
+ <!-- end of navigation bar -->
+
+ <!-- beginning of navigation bar -->
+ <!-- end of search -->
+ <!-- beggining of product view and cart if any -->
+
+ <div class="-main-grid">
+  <div>
+   <%- include('main-product.ejs') %> 
+  </div>
+   <!-- card  -->
+  <div class="cart-top">
+   <div class="cart-cart-table">
+    <%- include('cart.ejs') %> 
+   </div>
+   <div class="cart-cart-bottom">
+    <%- include('cart-bottom.ejs') %>
+   </div>
+  </div>
+ </div>
+ <script src="/cart.js"></script>
+</body>

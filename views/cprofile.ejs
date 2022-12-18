@@ -1,0 +1,71 @@
+<%- include('header.ejs')  %> 
+<body>
+ <div class="container-fluid bg-primary p-4">
+  <div class="container">
+   <div class="row">
+    <div class="col">
+     add center profile information
+    </div>
+   </div>
+  </div>
+ </div>
+ <div class="container">
+  <div class="row">
+   <div class="col">
+    <form autocomplete="off" spellcheck="true" au>
+     <!-- name of the company -->
+     <div class="form-row">
+      <div class="form-group">
+       <label for="">company name</label>
+       <input type="text" required  class="form-control mt-3" id="comname">
+      </div>
+     </div>
+
+     <!-- email -->
+
+     <div class="form-row">
+      <div class="form-group">
+       <label for="">email</label>
+       <input type="email" inputmode="email"  required class="form-control mt-3" id="cemail">
+      </div>
+     </div>
+
+     <!-- address -->
+
+     <div class="form-row">
+      <div class="form-group">
+       <label for=""> address</label>
+       <textarea rows="3"  required class="form-control mt-3"></textarea>
+      </div>
+     </div>
+
+     <!-- contact number -->
+
+     <div class="form-row">
+      <div class="form-group">
+       <label for="">contact number</label>
+       <input type="number" inputmode="numeric" required multiple  minlength='10' maxlength='10' class="form-control mt-3" id="cnumbers">
+      </div>
+     </div>
+     
+     <!-- company logo -->
+     <div class="form-row">
+      <div class="form-group">
+       <label for="">company logo</label>
+       <input type="file" required  class="form-control mt-3" id="clogo">
+      </div>
+     </div>
+
+     <!-- button -->
+
+     <div class="form-row">
+      <div class="form-group">
+       <button class="btn btn-primary text-lead mt-4" style="width: 100%;">update</button>
+      </div>
+     </div>
+    </form>
+   </div>
+  </div>
+ </div>
+ <script src="/global.js"></script>
+</body>
