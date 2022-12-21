@@ -5,6 +5,7 @@ const products = require('./controllers/newProducts');
 const PORT = process.env.PORT || 4000;
 const imageConstruct = require('./controllers/image');
 const Tax = require('./controllers/tax');
+const transaction = require('./controllers/transactions');
 
 // use cookie parser and express body parser
 app.use(express.json())
@@ -19,37 +20,37 @@ app.set('view engine', 'ejs')
 
 app.get('/', function (request, response) { response.render('index') })
 app.get("/newproduct", function (req, res) { res.render('nproduct.ejs') })
-app.get('/centerprofile', function(req,res) {res.render('cprofile.ejs')})
+app.get('/centerprofile', function (req, res) { res.render('cprofile.ejs') })
 app.listen(PORT, function (err) { if (err) throw err });
 
 
 app.get("/api/v1/product", function (request, response) {
- products.getProduct(request,response);
+ products.getProduct(request, response);
 })
 
 
 const addImage = new imageConstruct('product');
-app.post('/api/v1/product', addImage.upload().single('image'), function(request,response,next) {
- products.addProduct(request,response,request.file.filename,next);
+app.post('/api/v1/product', addImage.upload().single('image'), function (request, response, next) {
+ products.addProduct(request, response, request.file.filename, next);
 })
 
-app.put('/api/v1/product', function(request,response,next) {
- products.updateProduct(request,response,next)
+app.put('/api/v1/product', function (request, response, next) {
+ products.updateProduct(request, response, next)
 })
-app.delete('/api/v1/product', function(request,response,next) {
- products.deleteProduct(request,response,next)
+app.delete('/api/v1/product', function (request, response, next) {
+ products.deleteProduct(request, response, next)
 })
 
 
 
 // render view product page
 
-app.get('/viewproducts', function(request,response) {
+app.get('/viewproducts', function (request, response) {
  response.render('viewproducts.ejs')
 })
 
 // get all product
-app.get('/tax', function(request,response) {
+app.get('/tax', function (request, response) {
  response.render('transactions.ejs')
 })
 
@@ -57,23 +58,57 @@ app.get('/tax', function(request,response) {
 
 // get single image 
 
-app.get("/api/v1/image" , function(request,response) {
+app.get("/api/v1/image", function (request, response) {
  const imageid = request.query.id;
- response.sendFile(path.join(__dirname,'/public/asserts/product',imageid));
+ response.sendFile(path.join(__dirname, '/public/asserts/product', imageid));
 })
 
 
-app.get('/api/v1/tax', function(request,response) {
-  let tax = new Tax(request,response);
+app.get('/api/v1/tax', function (request, response) {
+ let tax = new Tax(request, response);
+ // tax.getAllTax();
+ const hasQueries = Object.keys(request.query).length;
+ // if more than zero 
+ if (hasQueries > 0) {
+  if (Object.keys(request.query).includes('taxapplied') && Object.keys(request.query).includes('taxid')) {
+   const { taxapplied, taxid } = request.query;
+   if (taxapplied && taxid) {
+    tax.updateTaxAppliedStatus(taxapplied, taxid);
+   }
+   else {
+    response.send(request.query)
+   }
+  }
+
+
+  if (Object.keys(request.query).includes('taxtoapply')) {
+   tax.taxToApply();
+  }
+
+
+ }
+ else {
   tax.getAllTax();
+ }
 })
 
-app.post('/api/v1/tax', function(request,response) {
-  let tax = new Tax(request,response);
-  tax.addTax();
+app.post('/api/v1/tax', function (request, response) {
+ let tax = new Tax(request, response);
+ tax.addTax();
 })
 
-app.put('/api/v1/tax', function(request,response) {
-  let tax = new Tax(request,response);
-  tax.updateTax();
+app.put('/api/v1/tax', function (request, response) {
+ let tax = new Tax(request, response);
+ tax.updateTax();
+})
+
+app.delete('/api/v1/tax', function (request, response) {
+ let tax = new Tax(request, response);
+ const id = request.body.taxid;
+ tax.deleteTax(id);
+})
+
+
+app.post('/transaction', function (request, response) {
+  transaction(request, response)
 })

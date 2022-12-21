@@ -1,4 +1,4 @@
-<%- include('header.ejs') %> 
+<%- include('header.ejs') %>
 <body>
   <div class="container-fluid p-4 bg-dark text-white">
     <div class="container">
@@ -7,9 +7,16 @@
           <h3>Add Tax</h3>
         </div>
         <div class="col">
-          <button type="button" class="btn btn-dark float-right" id="addtaxbtn">view taxes</button>
+          <button type="button" class="btn btn-dark float-right" id="addtaxbtn">
+            view taxes
+          </button>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="message-log" id="message-log">
+
     </div>
   </div>
   <div class="container-fluid">
@@ -17,14 +24,28 @@
       <div class="row">
         <div class="col">
           <div class="col-12">
-            <form  id="taxes">
+            <form id="taxes">
               <div class="form-group">
-                <input type="text" class="form-control" id="tax-name" placeholder="text name">
-                <input type="number" inputmode="numeric" min="0" max="100" class="form-control" id="tax-rate" 
-                step="0.5"
-                placeholder="tax rate">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="tax-name"
+                  placeholder="text name"
+                />
+                <input
+                  type="number"
+                  inputmode="numeric"
+                  min="0"
+                  max="100"
+                  class="form-control"
+                  id="tax-rate"
+                  step="0.5"
+                  placeholder="tax rate"
+                />
                 <!-- add more tax -->
-                <button type="'button" class="btn btn-primary" id="add-tax">Add Tax</button>
+                <button type="'button" class="btn btn-primary" id="add-tax">
+                  Add Tax
+                </button>
               </div>
             </form>
           </div>
@@ -35,22 +56,22 @@
   <div class="container-fluid">
     <div class="container">
       <div class="row">
-      <div class="col">
-        <table>
-          <thead>
-            <tr>
-              <th>tax name</th>
-              <th>tax rate</th>
-              <th>action</th>
-            </tr>
-          </thead>
-          <tbody id="taxes-table">
-            
-          </tbody>
-        </table>
-      </div>
+        <div class="col">
+          <table class="table taxes-table">
+            <thead>
+              <tr>
+                <th>id</th>
+                <th>tax name</th>
+                <th>tax rate</th>
+                <th>action</th>
+                <th>Tax applied</th>
+              </tr>
+            </thead>
+            <tbody id="taxes-tbody"></tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
-<script src="/tax.js"></script>  
+  <script src="/tax.js"></script>
 </body>

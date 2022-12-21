@@ -253,7 +253,7 @@ table > thead > tr > th {
 .cart-top {
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: 85% auto;
+  grid-template-rows: 80% auto;
 }
 .cart-top > .cart-cart-table {
   margin: 0;
@@ -268,8 +268,9 @@ svg:hover {
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: 50% auto;
+  grid-template-columns: 50% 50%;
   grid-template-rows: 100px;
+  grid-auto-rows: 100px;
 }
 .card-button-wrapper > .card-button {
   margin: 0;
@@ -283,4 +284,105 @@ svg:hover {
   color: white;
   background-color: black;
   align-items: center;
+}
+
+.taxes-table {
+  padding: 0;
+  margin: 0;
+  margin-top: 40px;
+}
+.taxes-table > thead {
+  background-color: black;
+}
+
+.taxes-table > thead > tr > th {
+  color: white;
+  font-weight: 500;
+  font-size: 15px;
+  padding-left: 20px;
+  text-transform: capitalize;
+}
+
+.taxes-table > tbody > tr > td {
+  padding-left: 20px;
+  border-bottom: 1px solid lightgray;
+  color: green;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+input[type='range'] {
+  outline: none;
+  width: 30px;
+}
+
+.cart-discount {
+  display: grid;
+  grid-template-columns: 40% auto;
+  grid-template-rows: 100%;
+  margin-top: 20px;
+  display: none;
+}
+
+.cart-discount > label {
+  text-align: left;
+  font-size: 40px;
+  color: black;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+.cart-discount > input {
+  text-align: right;
+  font-size: 40px;
+  color: blue !important;
+  text-transform: uppercase;
+  border-radius: 0px;
+}
+
+.cart-discount > input:invalid {
+  border: 1px solid black !important;
+}
+
+.cart-discount > input::placeholder {
+  color: grey;
+  font-size: 14px !important;
+  text-transform: capitalize;
+}
+
+#tax-table {
+  /* display: none; */
+  margin: 0;
+  padding: 0;
+}
+
+#tax-table > #tax-list {
+  display: grid;
+  grid-template-columns: 70% 30%;
+  grid-template-rows: 100%;
+}
+
+#tax-table > #tax-list > .tax-name,
+#tax-table > #tax-list > .tax-rate{
+  text-align: left;
+  color: black;
+  font-weight: 500;
+  color: grey;
+  text-transform: capitalize;
+  padding-top: 10px;
+}
+
+#tax-table > #tax-list > .tax-rate::after {
+  content: ' GHC';
+}
+
+#tax-table > #tax-list > .tax-name {
+  padding-left: 20px;
+}
+
+.card-button:focus,
+.card-button:active,
+.card-button:hover {
+  outline: 1px solid white;
+  cursor: pointer;
 }
