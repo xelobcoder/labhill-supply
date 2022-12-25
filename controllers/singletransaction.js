@@ -35,12 +35,17 @@ const renderCart = function (request, response, next) {
       // get the product from the database
       const sql = `SELECT * FROM product where name IN (?)`;
       connection.query(sql, [getAllProducts(information.cart)], (err, result) => {
-       console.log(sql)
        if (err) {
         throw err;
        }
        information.product = result;
-       response.send(information);
+       // get tax applied to that pacticular transaction
+       let mysql = `SELECT * FROM taxapplied where transactionid =(?)`;
+       connection.query(mysql,[transactionid],(err,result) => {
+        if(err) {throw err}
+        information.taxesApplied = result;
+        response.send(information);
+       })
       })
      }
     });

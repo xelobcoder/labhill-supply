@@ -21,6 +21,33 @@ function AddTransaction(request, response, next) {
   })
  }
 
+ function getTaxData() {
+  if (taxApplied == false) {
+   return null;
+  }
+  else {
+   // get all tax data whrer tax is applied = TRUE
+   const sql = `SELECT * FROM tax WHERE taxapplied = 'TRUE'`;
+   connection
+    .query(sql, (err, result) => {
+     if (err) {
+      throw err;
+     }
+     // if result is not empty, add to tax applied data for that transaction
+     if (result.length > 0) {
+      for (let i = 0; i < result.length; i++) {
+       const sql = `INSERT INTO taxapplied (transactionid, taxname, rate) VALUES (?,?,?)`;
+       connection.query(sql, [transactionid, result[i].taxname, result[i].taxrate], (err, result) => {
+        if (err) {
+         throw err;
+        }
+       })
+      }
+     }
+    })
+  }
+ }
+
  // add new product to the database
 
  function AddnewtoCart(productname, quantity, total, transactionid, productid) {
@@ -70,6 +97,7 @@ function AddTransaction(request, response, next) {
       })
      i++;
      if (i === cart.length) {
+      getTaxData();
       response.send({
        message: 'transaction successful',
        status: 'success',

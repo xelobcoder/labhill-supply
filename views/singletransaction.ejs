@@ -9,19 +9,49 @@
  </div>
 </div>
 <!-- main cart -->
+
 <div class="container-fluid" id="viewproduct-page">
  <div>
   <div id="header-cart-flow">
+    <div>image</div>
     <div>productname</div> 
     <div>quantity</div>
     <div>price</div>
+    <div>total</div>
   </div>
    <div id="cart" class="list-group-item-list">
 
    </div>
  </div>
   <div class="payment-structure">
-  orporis odio, ipsbero perferendis, maiores nam dolores.
+    <div class="payment-structure-header">
+      <div >payment structure</div>
+    </div>
+    <div class="payment-structure-body">
+      <div class="payment-structure-body-row">
+      <div id="subtal-header">subtotal</div>
+      <div id="subtotal"></div>
+      </div>
+      <div class="payment-structure-body-row">
+      <div id="tax-header">tax</div>
+      <div id="tax"></div>
+      </div>
+      <div class="payment-structure-body-row">
+        <div>total</div>
+        <div id="total"></div>
+        </div>
+       </div>
+      <div class="payment-structure-body-row">
+        <div>Delivery Address</div>
+        <div id="shipping"></div>
+      </div>
+      <div class="payment-structure-body-row">
+        <div>payment Amount</div>
+        <div id="payment-field-holder"></div>
+      </div>
+      <div class="payment-structure-body-row">
+      <button class="btn btn-outline-success btn-block mt-5">pay</button>
+      </div>
   </div>
 </div>
 <script src="./payment.js"></script>

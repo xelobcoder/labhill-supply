@@ -238,7 +238,7 @@ window.onload = (ev) => {
   displayTax = async () => {
    // get tax data
    let taxData = await this.getTaxData();
-   console.log(taxData)
+
    // reduce the tax data to get the total tax
    let totalTax = this.SelectedProductArray.reduce((acc, item) => {
     return acc + item.total;
