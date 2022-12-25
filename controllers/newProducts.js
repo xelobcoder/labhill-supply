@@ -26,7 +26,10 @@ const addProduct = function (req, res, imageid, next) {
 					res.send(err)
 				}
 				if (result) {
-					res.send('product added');
+					res.send({
+						status: 'success',
+						message: 'product added successfully'
+					});
 				}
 			})
 		}

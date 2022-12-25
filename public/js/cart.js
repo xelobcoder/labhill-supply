@@ -81,7 +81,6 @@ window.onload = (ev) => {
     cart.SelectedTemporaryLocation.push(filteredProduct[0]);
    }
    AddOneAgo();
-   console.log(this.SelectedTemporaryLocation)
   }
 
   MakeOneSelectionAtATime() {
@@ -406,7 +405,10 @@ window.onload = (ev) => {
     .then((data) => {
      console.log(data);
      // empty the cart
-     // this.EmptyCart();
+     if (data.status == 'success') {
+      this.EmptyCart();
+      window.location.href = `http://localhost:4000/viewtransaction?transactionid=${data.transactionid}`;
+     }
     })
     .catch((err) => {
      console.log(err);

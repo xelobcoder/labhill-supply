@@ -5,7 +5,8 @@ const products = require('./controllers/newProducts');
 const PORT = process.env.PORT || 4000;
 const imageConstruct = require('./controllers/image');
 const Tax = require('./controllers/tax');
-const transaction = require('./controllers/transactions');
+const AddTransaction = require('./controllers/transactions');
+const renderCart = require('./controllers/singletransaction');
 
 // use cookie parser and express body parser
 app.use(express.json())
@@ -109,6 +110,15 @@ app.delete('/api/v1/tax', function (request, response) {
 })
 
 
-app.post('/transaction', function (request, response) {
-  transaction(request, response)
+app.post('/transaction', function (request, response, next) {
+ AddTransaction(request, response, next);
+})
+
+app.get('/viewtransaction', function (request, response, next) {
+  response.render('singletransaction.ejs')
+})
+
+
+app.get('/api/v1/transaction', function (request, response, next) {
+ renderCart(request, response, next);
 })
