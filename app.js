@@ -7,7 +7,7 @@ const imageConstruct = require('./controllers/image');
 const Tax = require('./controllers/tax');
 const AddTransaction = require('./controllers/transactions');
 const renderCart = require('./controllers/singletransaction');
-
+const customer = require('./controllers/customer')
 // use cookie parser and express body parser
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -121,4 +121,15 @@ app.get('/viewtransaction', function (request, response, next) {
 
 app.get('/api/v1/transaction', function (request, response, next) {
  renderCart(request, response, next);
+})
+
+// page for new customer
+
+app.get('/newcustomer', function(request,response){
+  response.render('newCustomer.ejs')
+})
+
+
+app.post('/api/v1/customers', function(request,response){
+  customer.addCustomer(request,response)
 })

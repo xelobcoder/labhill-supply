@@ -1,0 +1,77 @@
+<%- include('header.ejs') %> 
+<body style="background-color: #6187b81a;">
+ <div class="container-fluid bg-success p-2">
+  <div class="container">
+   <div class="row">
+    <div class="col">
+     <h1 class="text-white text-capitalize">new customer</h1>
+    </div>
+   </div>
+  </div>
+ </div>
+ <div class="container-fluid">
+  <div class="container">
+   <div id="message-log">
+
+   </div>
+  </div>
+ </div>
+ <div class="container-fluid mt-2">
+  <div class="container bg-white">
+   <div class="row">
+    <div class="col">
+     <form action="" id="nwcustomerform">
+      <div class="form-row">
+       <label for="">customer or company name</label>
+       <!-- input field -->
+       <input type="text" class="form-control" name="customerName" id="customerName" placeholder="customer name">
+      </div>
+ 
+      <div class="form-row">
+       <label for=""> address</label>
+       <!-- input field -->
+       <input type="text" class="form-control" name="customerAddress" id="customerAddress" 
+       placeholder="customer address">
+      </div>
+ 
+      <div class="form-row">
+       <label for="">phone</label>
+       <!-- input field -->
+       <input type="text" class="form-control" name="customerPhone" id="customerPhone"  multiple
+       inputmode="numeric" placeholder="customer phone">
+      </div>
+ 
+      <div class="form-row">
+       <label for=""> email</label>
+       <!-- input field -->
+       <input type="text" class="form-control" 
+       inputmode="email"
+       name="customerEmail" id="customerEmail" 
+       placeholder="customer email">
+      </div>
+ 
+      <div class="form-row">
+       <label for="">status</label>
+       <!-- input field -->
+       <select name="customerStatus" id="customerStatus" class="form-control">
+        <option value="active">active</option>
+        <option value="inactive">inactive</option>
+       </select>
+      </div>
+
+      <!-- button -->
+      <div class="form-row">
+       <button type="button" id="savebtn" class="btn btn-success btn-lg mt-4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+       </svg>
+       Add customer  
+      </button>
+      </div>
+     </form>
+    </div>
+   </div>
+  </div>
+ </div>
+ <script src="/customer.js"></script>
+</body>

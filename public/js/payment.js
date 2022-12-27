@@ -100,12 +100,12 @@ window.onload = (ev) => {
        let total = (totalcost / 100) * item.rate;
        return (
         `
-       <div>
-        <div id='taxname'>${item.taxname} </div>
-        <div id='taxrate'>rate (${item.rate} %)</div>
-        <div id='taxtotal'>${total} GHC</div>
-       </div>
-       `
+                <div>
+                  <div id='taxname'>${item.taxname} </div>
+                  <div id='taxrate'>rate (${item.rate} %)</div>
+                  <div id='taxtotal'>${total} GHC</div>
+                </div>
+                `
        )
       })
       taxField.innerHTML = taxHtml.join('');
@@ -174,7 +174,7 @@ window.onload = (ev) => {
     function ProvidePaymentField() {
      let input = document.createElement('input');
      // set attribute 
-     input.classList.add('form-control','payment-field');
+     input.classList.add('form-control', 'payment-field');
      // add id
      input.setAttribute('id', 'paymentfield');
      // get payment field;

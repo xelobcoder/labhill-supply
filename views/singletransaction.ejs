@@ -1,5 +1,5 @@
 <%- include('header.ejs') %> 
-<div class="container-fluid bg-success p-4">
+<div class="container-fluid bg-success p-1">
  <div class="container">
   <div class="row">
    <div class="col text-lead text-white text-capitalize">
@@ -11,7 +11,7 @@
 <!-- main cart -->
 
 <div class="container-fluid" id="viewproduct-page">
- <div>
+ <div id="product-section-view">
   <div id="header-cart-flow">
     <div>image</div>
     <div>productname</div> 
@@ -25,31 +25,49 @@
  </div>
   <div class="payment-structure">
     <div class="payment-structure-header">
-      <div >payment structure</div>
+      <div >payment</div>
     </div>
     <div class="payment-structure-body">
       <div class="payment-structure-body-row">
-      <div id="subtal-header">subtotal</div>
-      <div id="subtotal"></div>
+        <div id="subtal-header">subtotal</div>
+        <div id="subtotal"></div>
       </div>
       <div class="payment-structure-body-row">
-      <div id="tax-header">tax</div>
-      <div id="tax"></div>
+        <div id="tax-header">tax</div>
+        <div id="tax"></div>
       </div>
       <div class="payment-structure-body-row">
         <div>total</div>
         <div id="total"></div>
         </div>
        </div>
-      <div class="payment-structure-body-row">
+       <!-- pay to -->
+       <div class="payment-structure-body-row" id="crawl">
+        <div>pay to</div>
+        <div>
+          <input type="text" id="payto" class="form-control" style='height:60px;margin-top: 20px;'>
+        </div>
+      </div>
+      <div class="payment-structure-body-row" id="crawl">
+        <div>payment mode</div>
+        <div>
+          <select class="form-control" style="height:60px;margin-top: 20px;">
+            <option value="mobile money">mobile money</option>
+            <option value="cash">cash</option>
+            <option value="bank transfer">bank transfer</option>
+          </select>
+        </div>
+      </div>
+       <!-- end of pay -->
+      <div class="payment-structure-body-row" id="crawl">
         <div>Delivery Address</div>
         <div id="shipping"></div>
       </div>
-      <div class="payment-structure-body-row">
-        <div>payment Amount</div>
+      <div class="payment-structure-body-row" id="crawl">
+        <div>Payment Amount</div>
         <div id="payment-field-holder"></div>
       </div>
-      <div class="payment-structure-body-row">
+      <div class="payment-structure-body-row" id="crawl">
       <button class="btn btn-outline-success btn-block mt-5">pay</button>
       </div>
   </div>
