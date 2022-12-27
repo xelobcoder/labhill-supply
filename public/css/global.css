@@ -598,3 +598,21 @@ input::placeholder
   color: #00224f !important;
   font-weight: 600;
 }
+
+.icons-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icons-group > i {
+  padding: 10px;
+  cursor: pointer;
+}
+.table-active,
+.bg-active{
+  background-color: white;
+  color: black !important;
+  font-weight: 500;
+  text-transform: capitalize;
+}

@@ -94,7 +94,7 @@ window.onload = function () {
           this.createMessage(data.message, 'warning');
         }
 
-        if (data.status == 'info') {
+        if (data.status === 'info') {
           this.createMessage(data.message, 'info');
         }
 
@@ -118,6 +118,7 @@ window.onload = function () {
     customer.forwardToDb()
   })
 
+  
 }
 
 

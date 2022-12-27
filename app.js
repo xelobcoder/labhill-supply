@@ -7,7 +7,8 @@ const imageConstruct = require('./controllers/image');
 const Tax = require('./controllers/tax');
 const AddTransaction = require('./controllers/transactions');
 const renderCart = require('./controllers/singletransaction');
-const customer = require('./controllers/customer')
+const customer = require('./controllers/customer');
+const { deleteCustomers, getCustomers } = require('./controllers/customer');
 // use cookie parser and express body parser
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -132,4 +133,16 @@ app.get('/newcustomer', function(request,response){
 
 app.post('/api/v1/customers', function(request,response){
   customer.addCustomer(request,response)
+})
+
+app.delete('/api/v1/customers', function(request,response){
+  deleteCustomers(request,response)
+})
+
+app.get('/api/v1/customers', function(request,response){
+  getCustomers(request,response)
+})
+
+app.get('/customers', function(request,response){
+  response.render('customers.ejs')
 })

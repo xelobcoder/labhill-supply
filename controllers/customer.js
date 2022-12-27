@@ -57,6 +57,80 @@ const customer = {
       )
     })
 
+  },
+
+  deleteCustomers(request, response) {
+    const { id } = request.body;
+    // check if is an array
+    if (Array.isArray(id)) {
+      // loop through array and delete each customer
+      // using a white loop
+      let i = 0;
+      while (i < id.length) {
+        const deleteCustomer = `DELETE FROM customer WHERE id = ${id[i]}`;
+        connectiondb.query(deleteCustomer, (err, result) => {
+          if (err) {
+            response.send({
+              status: 'error',
+              message: 'An error occured while deleting customer'
+            });
+            throw new Error(err);
+          }
+        })
+        // i = i + 1;
+        i++;
+        // send response if loop is done
+        if (i === id.length) {
+          response.send({
+            status: 'success',
+            message: 'Customers deleted successfully'
+          });
+        }
+      }
+    }
+    else {
+      // delete single customer
+      const deleteCustomer = `DELETE FROM customer WHERE id = ${id}`;
+      connectiondb.query(deleteCustomer,
+        (err, result) => {
+          if (err) {
+            response
+              .status(500)
+              .send({
+                status: 'error',
+                message: 'An error occured while deleting customer'
+              });
+            return false;
+          }
+          if (result) {
+            response.send({
+              status: 'success',
+              message: 'Customer deleted successfully'
+            });
+          }
+        })
+    }
+
+  },
+  getCustomers(request, response) {
+    const getCustomers = `SELECT * FROM customer`;
+    connectiondb.query(getCustomers, (err, result) => {
+      if (err) {
+        response
+          .status(500)
+          .send({
+            status: 'error',
+            message: 'An error occured while getting customers'
+          });
+        return false;
+      }
+      if (result) {
+        response.send({
+          status: 'success',
+          data: result
+        });
+      }
+    })
   }
 }
 

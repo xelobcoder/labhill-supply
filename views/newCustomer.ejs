@@ -1,4 +1,5 @@
 <%- include('header.ejs') %> 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
 <body style="background-color: #6187b81a;">
  <div class="container-fluid bg-success p-2">
   <div class="container">
@@ -16,7 +17,7 @@
    </div>
   </div>
  </div>
- <div class="container-fluid mt-2">
+ <div class="container-fluid mt-2 ">
   <div class="container bg-white">
    <div class="row">
     <div class="col">
@@ -73,5 +74,34 @@
    </div>
   </div>
  </div>
- <script src="/customer.js"></script>
+
+ <!-- customer display page  -->
+
+ <div class="container-fluid">
+  <div class="container">
+    <div class="row">
+      <div class="row">
+        <div class="filter-table mt-2">
+          <input type="search" name="filtering-table"  placeholder='filter table using name or phone number' id="filteringinput">
+        </div>
+      </div>
+      <div class="col">
+        <!-- add icons for delete, edit , archive etc -->
+       <div class="icons-group">
+        <i  id='deletetrash'class="bi bi-trash3"></i>
+        <i class="bi bi-pencil"></i>
+        <i class="bi bi-badge-tm"></i>
+        <i class="bi bi-archive"></i>
+       </div>
+      </div>
+    </div>
+    <!-- customer list -->
+    <div class="row">
+      <table class="table" id="customers">
+       
+      </table>
+    </div>
+  </div>
+ </div>
+<script src="/customer.js"></script>
 </body>
