@@ -1,6 +1,6 @@
 window.onload = (ev) => {
   class Table {
-    constructor(columnnumber, columnHeaders, tablename, data, framework, severending, querymode, uniqueId) {
+    constructor(columnnumber, columnHeaders, tablename, framework, severending, querymode, uniqueId) {
       this.column = columnnumber;
       this.columnHeaders = columnHeaders;
       this.tablename = tablename;
@@ -10,6 +10,7 @@ window.onload = (ev) => {
       this.uniqueId = uniqueId || 'id';
     }
 
+    frontenddata = [];
 
     isConstructorOkay() {
       if (typeof this.columnHeaders != 'object' && !Array.isArray(this.columnHeaders)) {
@@ -37,10 +38,15 @@ window.onload = (ev) => {
       return true;
     }
 
-
     getData = async () => {
       let response = await fetch(this.api);
       let data = await response.json();
+      data.data.forEach((item) => {
+        this.frontenddata.push(item);
+      })
+      // return
+      // this data while used when delete or edit take place 
+      // if not the front end dat will alway e used for sorting
       return data.data;
     }
 
@@ -90,79 +96,221 @@ window.onload = (ev) => {
       return document.createElement('tbody');
     }
 
-    createTableHead() {
-      if (this.dataIntegity()) {
-        let thead = this.createThead();
-        let tr = this.createTr();
-        let current = 0;
-        let target = this.column;
-        let checkbox = document.createElement('input');
-        // create type
-        checkbox.type = 'checkbox';
-        let checkBoxParent = this.createTh();
-        checkBoxParent.appendChild(checkbox);
-        // append to thead
-        tr.appendChild(checkBoxParent)
-        // create th elements
-        while (current < target) {
-          let th = this.createTh();
-          th.innerHTML = this.columnHeaders[current];
-          tr.appendChild(th);
-          current++;
-        }
-        thead.appendChild(tr);
-        let table = document.getElementById(this.tablename);
+    createTableFoot() {
+      return document.createElement('tfoot');
+    }
 
-        if (this.cssFramework == 'bootstrap') {
-          thead.classList.add('table', 'text-capitalize')
-        }
-        console.log(thead)
-        //  add to table
-        table.appendChild(thead)
+
+    createTdSpan() {
+      let span = document.createElement('span');
+      // add top symbol
+      let top = document.createElement('i');
+      top.className = "bi bi-caret-up";
+      // add bottom symbol
+      let bottom = document.createElement('i');
+      bottom.setAttribute('id', 'caret-down');
+      bottom.className = "bi bi-caret-down d-none";
+      // add text
+      span.appendChild(top)
+      span.appendChild(bottom);
+      // reutrn span
+      return span;
+    }
+
+    async sortDataAsc(orderby) {
+      let data = [...this.frontenddata];
+      console.log(data);
+      // sort string 
+      if (typeof data[0][orderby] == 'string') {
+        data.sort((a, b) => {
+          let x = a[orderby].toLowerCase();
+          let y = b[orderby].toLowerCase();
+          if (x < y) { return -1; }
+          if (x > y) { return 1; }
+          return 0;
+        })
+      }
+      // sort number
+      else if (typeof data[0][orderby] == 'number') {
+        data.sort((a, b) => {
+          return a[orderby] - b[orderby];
+        })
+      }
+      // sort date
+      else if (typeof data[0][orderby] == 'object') {
+        data.sort((a, b) => {
+          return new Date(a[orderby]) - new Date(b[orderby]);
+        })
+      }
+      // return
+      return data;
+
+    }
+
+
+    async sortDataDesc(orderby) {
+      // sort string desc
+      if (typeof this.frontenddata[0][orderby] == 'string') {
+        this.frontenddata.sort((a, b) => {
+          let x = a[orderby].toLowerCase();
+          let y = b[orderby].toLowerCase();
+          if (x > y) { return -1; }
+          if (x < y) { return 1; }
+          return 0;
+        })
+      }
+      // sort number desc
+      else if (typeof this.frontenddata[0][orderby] == 'number') {
+        this.frontenddata.sort((a, b) => {
+          return b[orderby] - a[orderby];
+        })
+      }
+      // sort date desc
+      else if (typeof this.frontenddata[0][orderby] == 'object') {
+        this.frontenddata.sort((a, b) => {
+          return new Date(b[orderby]) - new Date(a[orderby]);
+        })
+      }
+      // return data
+      return this.frontenddata;
+    }
+
+
+    toggleCaret(th) {
+      let a = th.firstChild;
+      let span = th.lastChild;
+      let caretup = span.firstChild;
+      let caretdown = span.lastChild;
+      let orderby = a.innerHTML;
+      // th has o children nodes ignore
+      let thHasChildren = th.childNodes.length;
+      if (thHasChildren == 2) {
+        a.addEventListener('click', (ev) => {
+          if (caretup.classList.contains('d-none')) {
+            caretup.classList.remove('d-none');
+            caretdown.classList.add('d-none');
+            this.sortDataAsc(orderby).then((data) => {
+              this.createTableBody(data);
+            })
+          }
+          else {
+            caretup.classList.add('d-none');
+            caretdown.classList.remove('d-none');
+            this.sortDataDesc(orderby).then((data) => {
+              this.createTableBody(data);
+            })
+          }
+        })
+      }
+      else {
+        return;
       }
     }
 
+
+    createTableHead() {
+      let thead = this.createThead();
+      let tr = this.createTr();
+      let current = 0;
+      let target = this.column;
+      let checkbox = document.createElement('input');
+      // create type
+      checkbox.type = 'checkbox';
+      let checkBoxParent = this.createTh();
+      checkBoxParent.appendChild(checkbox);
+      // append to thead
+      tr.appendChild(checkBoxParent)
+      // create th elements
+      while (current < target) {
+        let th = this.createTh();
+        th.innerHTML = `<a>${this.columnHeaders[current]}</a>`;
+        // add span
+        th.appendChild(this.createTdSpan());
+        tr.appendChild(th);
+        current++;
+      }
+      thead.appendChild(tr);
+
+      let table = document.getElementById(this.tablename);
+
+      if (this.cssFramework == 'bootstrap') {
+        thead.classList.add('table', 'text-capitalize')
+      }
+
+      //  add to table
+      table.appendChild(thead)
+      // toggle caret
+      let ths = thead.querySelectorAll('th');
+      ths.forEach(th => {
+        this.toggleCaret(th);
+      })
+    }
+
     createTableBody(data) {
-      if (this.dataIntegity()) {
-        let tbody = this.createTbody();
-        // remove all child nodes
-        if (tbody.hasChildNodes()) {
-          tbody.removeChild(tbody.childNodes);
-        }
-        let current = 0;
-        let target = data.length;
-        // data > 0
-        if (target > 0) {
-          while (current < target) {
-            let tr = this.createTr();
-            let checkbox = document.createElement('input');
-            // create type
-            checkbox.type = 'checkbox';
-            let checkBoxParent = this.createTd();
-            // add attribute of id
-            if (data[0][this.uniqueId] != undefined) {
-              checkbox.setAttribute('data-id', data[current][this.uniqueId]);
+      function RemoveFirstCheckBoxChecked() {
+        let checkbox = document.querySelectorAll('input[type="checkbox"]');
+        checkbox.forEach((check) => {
+          if (check.checked) {
+            if (!check.hasAttribute('data-id')) {
+              check.checked = false;
             }
-            else { checkbox.setAttribute('data-id', parseInt(data[current]['id'])); }
-            checkBoxParent.appendChild(checkbox);
-            // append to thead
-            tr.appendChild(checkBoxParent)
-            for (let key in data[current]) {
-              let td = this.createTd();
-              td.innerHTML = data[current][key];
-              tr.appendChild(td);
-            }
-            tbody.appendChild(tr);
-            console.log(tbody)
-            current++;
+            return;
+          }
+        })
+      }
+      RemoveFirstCheckBoxChecked();
+      // create tbody
+      let tbody = this.createTbody();
+      // get all children nodes
+      let childrenNodes = document.getElementById(this.tablename).childNodes;
+      // length greater than 0
+      // and remove all children of tagelement TBODY of that table
+      // new insertion could be made later
+      if (childrenNodes.length > 0) {
+        for(let i =0; i < childrenNodes.length; i++) {
+          if(childrenNodes[i].nodeName == 'TBODY'){
+            childrenNodes[i].innerHTML = ''
           }
         }
-        let table = document.getElementById(this.tablename);
-        if (this.cssFramework == 'bootstrap') {
-          tbody.classList.add('table', 'text-capitalize')
-        }
-        table.appendChild(tbody)
       }
+      // add tbody to table
+      let current = 0;
+      let target = data.length;
+      // data > 0
+      if (target > 0 && tbody.childNodes.length == 0) {
+        while (current < target) {
+          let tr = this.createTr();
+          let checkbox = document.createElement('input');
+          // create type
+          checkbox.type = 'checkbox';
+          let checkBoxParent = this.createTd();
+          // add attribute of id
+          if (data[0][this.uniqueId] != undefined) {
+            checkbox.setAttribute('data-id', data[current][this.uniqueId]);
+          }
+          else {
+            checkbox.setAttribute('data-id', parseInt(data[current]['id']));
+          }
+
+          checkBoxParent.appendChild(checkbox);
+          // append to thead
+          tr.appendChild(checkBoxParent)
+          for (let key in data[current]) {
+            let td = this.createTd();
+            td.innerHTML = data[current][key];
+            tr.appendChild(td);
+          }
+          tbody.appendChild(tr);
+          current++;
+        }
+      }
+      let table = document.getElementById(this.tablename);
+      if (this.cssFramework == 'bootstrap') {
+        tbody.classList.add('table', 'text-capitalize')
+      }
+      table.appendChild(tbody)
+      // mark row
+      this.markRow();
     }
 
     markRow() {
@@ -214,6 +362,44 @@ window.onload = (ev) => {
       }
     }
 
+    createTableFooter() {
+      let tfoot = this.createTableFoot();
+      let table = document.getElementById(this.tablename);
+      tfoot.innerHTML = `
+      <tr>
+        <td>
+          show
+        </td>
+        <td>
+          <select class="form-control" id='tfoot-show-level'>
+            <option value="4">4</option>  
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="500">500</option>
+            <option value="1000">1000</option>
+            <option value="all">all</option>
+          </select>
+        </td>
+      </tr>
+      `
+      table.appendChild(tfoot);
+      // get show element
+      let show = document.getElementById('tfoot-show-level');
+      if (show) {
+        // add event listener
+        show.onchange = (ev) => {
+          let requiredTarget = parseInt(ev.target.value);
+          if (requiredTarget <= this.frontenddata.length) {
+            let newdt = this.frontenddata.slice(0, requiredTarget)
+            this.createTableBody(newdt)
+          }
+          return;
+        }
+      }
+    }
+
     deleteCustomers() {
       let allcheckbox = document.querySelectorAll('input[type="checkbox"]');
 
@@ -247,40 +433,67 @@ window.onload = (ev) => {
           body: JSON.stringify({ id: selectedBox })
         })
         let data = await response.json();
-        console.log(
-          data
-        )
+
+        return;
       }
     }
 
-    async createTable(x) {
+    createMessageLog(message, type) {
+      let table = document.getElementById(this.tablename);
+      // table parent
+      let tableParent = table.parentElement;
+      // create div
+      let div = document.createElement('div');
+      // attach classlist depending on type
+      div.classList.add('alert', `alert-${type}`);
+      // create text node
+      let text = document.createTextNode(message);
+      // append text to div
+      div.appendChild(text);
+      // append div to table parent
+      tableParent.prepend(div);
+      // remove div after 3 seconds
+      setTimeout(() => {
+        tableParent.removeChild(div);
+      }, 3000)
+      // call create table
+      this.getData()
+        .then((data) => {
+          this.createTableBody(data);
+        })
+    }
+
+
+
+    async createTable() {
       let data = await this.getData();
       this.createTableHead();
       this.createTableBody(data);
+      this.createTableFooter();
       this.markRow();
     }
+
   }
 
-  const data = [
-    { name: 'tIIFU', email: 'HAMZA', address: 'kalpohin lowcost 30A', status: 'true', contact: '0595964565', actions: '' },
-    { name: 'tIIFU', email: 'HAMZA', address: 'kalpohin lowcost 30A', status: 'true', contact: '0595964565', actions: '' },
-    { name: 'tIIFU', email: 'HAMZA', address: 'kalpohin lowcost 30A', status: 'true', contact: '0595964565', actions: '' },
-    { name: 'tIIFU', email: 'HAMZA', address: 'kalpohin lowcost 30A', status: 'true', contact: '0595964565', actions: '' },
-    { name: 'tIIFU', email: 'HAMZA', address: 'kalpohin lowcost 30A', status: 'true', contact: '0595964565', actions: '' }
-  ]
 
 
-  let models = ['name', 'email', 'address', 'status', 'contact', 'date', 'actions'];
 
-  let table = new Table(7, models, 'customers', data, 'bootstrap', true, 'http://localhost:4000/api/v1/customers', 'ID');
+  let models = ['id', 'name', 'email', 'contact', 'address', 'status', 'date', 'actions'];
 
-  console.log(table.createTable())
+  let table = new Table(7, models, 'customers', 'bootstrap', true, 'http://localhost:4000/api/v1/customers', 'ID');
 
+  table.createTable();
 
 
   let deleteicon = document.getElementById('deletetrash');
 
   deleteicon.addEventListener('click', function () {
-    table.serverSideDeleting();
+    table.serverSideDeleting()
+      .then((data) => {
+        table.createMessageLog('Customers deleted successfully', 'success');
+      })
+      .catch((err) => {
+        table.createMessageLog('Error deleting customers', 'danger');
+      })
   })
 }

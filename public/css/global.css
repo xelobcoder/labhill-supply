@@ -611,8 +611,53 @@ input::placeholder
 }
 .table-active,
 .bg-active{
-  background-color: white;
+  background-color: whitesmoke;
+  border: 1px solid white;
   color: black !important;
+  font-weight: 400;
+  text-transform: capitalize;
+}
+
+#customers > thead > tr > th > span {
+  color: black;
   font-weight: 500;
   text-transform: capitalize;
+  position: relative;
+  top: -7px;
+  left: 10px;
+  cursor: pointer;
+}
+
+
+#customers {
+  height: auto;
+  background-color: white;
+  padding: 20px;
+}
+
+#customers > thead > tr > th > a {
+  cursor: pointer;
+}
+
+#customers > thead > tr > th > a:active,
+#customers > thead > tr > th > a:hover{
+  color: #00224f;
+}
+
+/* #caret-down {
+  position: relative;
+  top: 0px;
+  left: 90%;
+} */
+
+
+#customers > thead > tr > th {
+  border-left: 1px solid lightgray;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 15px;
+}
+
+#customers > thead > tr > th:nth-of-type(1){
+  border-left: 0px;
 }
