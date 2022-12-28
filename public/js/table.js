@@ -65,8 +65,7 @@ window.onload = (ev) => {
         let KEYSNO = Object.keys(data[i]).length;
         if (KEYSNO != this.column) {
           throw new Error(`${i} of data fields are not equal to provided columnname`);
-        }
-        else {
+        } else {
           return true;
         }
       }
@@ -125,8 +124,12 @@ window.onload = (ev) => {
         data.sort((a, b) => {
           let x = a[orderby].toLowerCase();
           let y = b[orderby].toLowerCase();
-          if (x < y) { return -1; }
-          if (x > y) { return 1; }
+          if (x < y) {
+            return -1;
+          }
+          if (x > y) {
+            return 1;
+          }
           return 0;
         })
       }
@@ -154,8 +157,12 @@ window.onload = (ev) => {
         this.frontenddata.sort((a, b) => {
           let x = a[orderby].toLowerCase();
           let y = b[orderby].toLowerCase();
-          if (x > y) { return -1; }
-          if (x < y) { return 1; }
+          if (x > y) {
+            return -1;
+          }
+          if (x < y) {
+            return 1;
+          }
           return 0;
         })
       }
@@ -175,6 +182,19 @@ window.onload = (ev) => {
       return this.frontenddata;
     }
 
+    footerShowSelect(data) {
+      // get select element
+      let select = document.getElementById('tfoot-show-level');
+      // get options
+      let requiredTarget = select.value;
+      if (requiredTarget == 'all' && isNaN(requiredTarget)) {
+        this.createTableBody(data);
+      } else {
+        let newData = data.slice(0, requiredTarget);
+        this.createTableBody(newData);
+      }
+
+    }
 
     toggleCaret(th) {
       let a = th.firstChild;
@@ -182,7 +202,7 @@ window.onload = (ev) => {
       let caretup = span.firstChild;
       let caretdown = span.lastChild;
       let orderby = a.innerHTML;
-      // th has o children nodes ignore
+      // th has  0  children nodes ignore
       let thHasChildren = th.childNodes.length;
       if (thHasChildren == 2) {
         a.addEventListener('click', (ev) => {
@@ -190,19 +210,17 @@ window.onload = (ev) => {
             caretup.classList.remove('d-none');
             caretdown.classList.add('d-none');
             this.sortDataAsc(orderby).then((data) => {
-              this.createTableBody(data);
+              this.footerShowSelect(data);
             })
-          }
-          else {
+          } else {
             caretup.classList.add('d-none');
             caretdown.classList.remove('d-none');
             this.sortDataDesc(orderby).then((data) => {
-              this.createTableBody(data);
+              this.footerShowSelect(data);
             })
           }
         })
-      }
-      else {
+      } else {
         return;
       }
     }
@@ -267,8 +285,8 @@ window.onload = (ev) => {
       // and remove all children of tagelement TBODY of that table
       // new insertion could be made later
       if (childrenNodes.length > 0) {
-        for(let i =0; i < childrenNodes.length; i++) {
-          if(childrenNodes[i].nodeName == 'TBODY'){
+        for (let i = 0; i < childrenNodes.length; i++) {
+          if (childrenNodes[i].nodeName == 'TBODY') {
             childrenNodes[i].innerHTML = ''
           }
         }
@@ -287,8 +305,7 @@ window.onload = (ev) => {
           // add attribute of id
           if (data[0][this.uniqueId] != undefined) {
             checkbox.setAttribute('data-id', data[current][this.uniqueId]);
-          }
-          else {
+          } else {
             checkbox.setAttribute('data-id', parseInt(data[current]['id']));
           }
 
@@ -345,15 +362,13 @@ window.onload = (ev) => {
           if (this.checked) {
             if (this.hasAttribute('data-id')) {
               this.parentElement.parentElement.classList.add('bg-active', 'text-white');
-            }
-            else {
+            } else {
               checkAll(checkboxes)
             }
           } else {
             if (this.hasAttribute('data-id')) {
               this.parentElement.parentElement.classList.remove('bg-active', 'text-white');
-            }
-            else {
+            } else {
               uncheckAll(checkboxes)
             }
           }
@@ -366,36 +381,31 @@ window.onload = (ev) => {
       let tfoot = this.createTableFoot();
       let table = document.getElementById(this.tablename);
       tfoot.innerHTML = `
-      <tr>
-        <td>
-          show
-        </td>
-        <td>
-          <select class="form-control" id='tfoot-show-level'>
-            <option value="4">4</option>  
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-            <option value="500">500</option>
-            <option value="1000">1000</option>
-            <option value="all">all</option>
-          </select>
-        </td>
-      </tr>
-      `
+          <tr>
+            <td>
+              show
+            </td>
+            <td>
+              <select class="form-control" id='tfoot-show-level'>
+                <option value="all">all</option>
+                <option value="4">4</option>  
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="500">500</option>
+                <option value="1000">1000</option>
+              </select>
+            </td>
+          </tr>
+    `
       table.appendChild(tfoot);
       // get show element
       let show = document.getElementById('tfoot-show-level');
       if (show) {
         // add event listener
         show.onchange = (ev) => {
-          let requiredTarget = parseInt(ev.target.value);
-          if (requiredTarget <= this.frontenddata.length) {
-            let newdt = this.frontenddata.slice(0, requiredTarget)
-            this.createTableBody(newdt)
-          }
-          return;
+          this.footerShowSelect(this.frontenddata);
         }
       }
     }
@@ -410,8 +420,7 @@ window.onload = (ev) => {
           let id = parseInt(box.getAttribute('data-id'));
           if (isNaN(id)) {
             // do nothing
-          }
-          else {
+          } else {
             selectedBox.push(id);
           }
         }
@@ -430,7 +439,9 @@ window.onload = (ev) => {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ id: selectedBox })
+          body: JSON.stringify({
+            id: selectedBox
+          })
         })
         let data = await response.json();
 
