@@ -1,8 +1,5 @@
 // add new transaction
-const ejs = require('ejs');
 const connection = require('./db.js')
-
-
 function AddTransaction(request, response, next) {
  const {
   transactionid,
@@ -81,6 +78,21 @@ function AddTransaction(request, response, next) {
   })
  }
 
+
+ function AddnewtoDiscount(discount, transactionid) {
+  return new Promise((resolve, reject) => {
+   const sql = `INSERT INTO discountapplied (discount, transactionid) VALUES (?,?)`;
+   connection.query(sql, [discount, transactionid], (err, result) => {
+    if (err) {
+     reject(err);
+    }
+    else {
+     resolve(result);
+    }
+   })
+  })
+ }
+
  if (cart.length > 0) {
   // add new transaction to the database
   AddnewTransaction(transactionid, taxApplied, discountApplied, discount, totalCost)
@@ -97,12 +109,24 @@ function AddTransaction(request, response, next) {
       })
      i++;
      if (i === cart.length) {
-      getTaxData();
-      response.send({
-       message: 'transaction successful',
-       status: 'success',
-       transactionid: transactionid
-      })
+      // add discount to the database
+      if (discountApplied == true) {
+       AddnewtoDiscount(discount, transactionid)
+        .then((result) => {
+         if (result) {
+          // get tax data
+          getTaxData();
+          response.send({
+           status: 'success',
+           message: 'Transaction added successfully',
+           transactionid
+          })
+         }
+        })
+        .catch((err) => {
+         console.log(err)
+        })
+      }
      }
     }
    })

@@ -88,7 +88,7 @@ window.onload = (ev) => {
 
    // display transaction details
 
-   function paymentStructures(transactions, products, cart, taxapplied) {
+   function paymentStructures(transactions, products, cart, taxapplied, discountApplied) {
     let subtotalField = document.getElementById('subtotal');
     let taxField = document.getElementById('tax');
     let shippingField = document.getElementById('shipping');
@@ -99,13 +99,12 @@ window.onload = (ev) => {
       let taxHtml = taxapplied.map((item, index) => {
        let total = (totalcost / 100) * item.rate;
        return (
+        ` <div>
+           <div id='taxname'>${item.taxname} </div>
+           <div id='taxrate'>rate (${item.rate} %)</div>
+           <div id='taxtotal'>${total} GHC</div>
+         </div>               
         `
-                <div>
-                  <div id='taxname'>${item.taxname} </div>
-                  <div id='taxrate'>rate (${item.rate} %)</div>
-                  <div id='taxtotal'>${total} GHC</div>
-                </div>
-                `
        )
       })
       taxField.innerHTML = taxHtml.join('');
@@ -117,10 +116,27 @@ window.onload = (ev) => {
 
     taxdisplay(transactions[0].totalcost);
 
+
+    // display discount html
+    let discountdisplay = function (discountObject) {
+     console.log(discountObject)
+     if (discountObject.length > 0) {
+      let discountAmount = discountObject[0].discount;
+      // get discount html
+      let discountHtml = document.getElementById('discount');
+      // display discount html
+      discountHtml.innerHTML = parseInt(discountAmount);
+      // rrturn discount
+      return discountAmount;
+     }
+    }
+
+    discountdisplay(discountApplied);
+
     // append subtotal value
     subtotalField.innerHTML = transactions[0].totalcost + ' ' + 'GHC';
 
-    function CalculateTotal() {
+    function CalculateTotalTax() {
      // reduce tax 
      function totalTax(taxArray) {
       let taxesValues = [];
@@ -136,6 +152,7 @@ window.onload = (ev) => {
        let sum = taxesValues.reduce((prev, current) => {
         return prev + current;
        })
+
        return sum;
       }
       else {
@@ -145,13 +162,32 @@ window.onload = (ev) => {
      }
 
      let taxesSum = totalTax(taxapplied);
-     let final = taxesSum + transactions[0].totalcost;
-     // add subtotal to taxes sum
-     return final
+
+     return taxesSum;
     }
 
     // append total to DOM
-    totalField.innerHTML = CalculateTotal() + ' ' + 'GHC'
+
+
+    // function to calculate total cost using subtotal tax and discount
+
+    function calculateTotalCost() {
+     // get discount
+     let discount = discountApplied.length > 0 ? discountApplied[0].discount : 0;
+     // get tax
+     let totalTax = taxapplied.length > 0 ? CalculateTotalTax() : 0;
+     // get subtotal
+     let subtotal = transactions[0].totalcost;
+     // calculate total
+     let total = subtotal + totalTax - discount;
+     // appenf to DOM
+     totalField.innerHTML = total + ' ' + 'GHC'
+     // return total
+     return total;
+    }
+
+    // calculate total cost
+    calculateTotalCost();
 
 
 
@@ -186,22 +222,82 @@ window.onload = (ev) => {
 
     ProvidePaymentField()
 
+
+    // submit payment
+    function submitPayment() {
+     let payment = {
+      transactionid: transactionid,
+      paymentmode: document.getElementById('paymentmethod').value,
+      deliveryaddress: document.getElementById('deliveryaddress').value,
+      totalcost: document.getElementById('total').innerHTML,
+      paymentTo: document.getElementById('payto').value,
+      paidAmount: document.getElementById('paymentfield').value,
+      subtotal: transactions[0].totalcost,
+      tax: CalculateTotalTax(),
+      total: calculateTotalCost(),
+      discount: discountdisplay(discountApplied),
+     }
+
+     let target = 0;
+
+     for (const key in payment) {
+      if (payment.hasOwnProperty(key)) {
+       if (payment[key] === '') {
+        alert('Please fill all fields')
+        return
+       }
+       else {
+        target++;
+       }
+      }
+     }
+
+     if (target === 10) {
+      // send to server
+       fetch('/api/v1/payments', {method:'POST', headers: {'content-type':'application/json'},body: JSON.stringify(payment)})
+       .then ( (data) =>  {return data.json()})
+       .then( (data) => console.log(data))
+       .catch ( (err) => console.log(err))
+     }
+    }
+
+
+
+    let paymentButton = document.getElementById('payment-button');
+
+    paymentButton.addEventListener('click', (e) => {
+     e.preventDefault();
+     submitPayment();
+    })
+
    }
+
+
 
    // get data from server
    function getData(transactionid) {
     fetch(`http://localhost:4000/api/v1/transaction/?transactionid=${transactionid}`)
      .then((response) => response.json())
      .then((data) => {
+      console.log(data)
       displayCartData(data.cart, data.product);
-      paymentStructures(data.transaction, data.product, data.cart, data.taxesApplied)
+      paymentStructures(data.transaction, data.product, data.cart, data.taxesApplied, data.discountApplied);
      })
    }
    getData(transactionid);
+
+
+
+
   }
 
+
   // display payment sttuctures
-
-
  }
+
+
+
+
 }
+
+

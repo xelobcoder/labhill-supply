@@ -37,6 +37,10 @@
         <div id="tax"></div>
       </div>
       <div class="payment-structure-body-row">
+        <div id="discount-header">discount</div>
+        <div id="discount"></div>
+      </div>
+      <div class="payment-structure-body-row">
         <div>total</div>
         <div id="total"></div>
         </div>
@@ -51,7 +55,7 @@
       <div class="payment-structure-body-row" id="crawl">
         <div>payment mode</div>
         <div>
-          <select class="form-control" style="height:60px;margin-top: 20px;">
+          <select class="form-control" id='paymentmethod' style="height:60px;margin-top: 20px;">
             <option value="mobile money">mobile money</option>
             <option value="cash">cash</option>
             <option value="bank transfer">bank transfer</option>
@@ -68,7 +72,7 @@
         <div id="payment-field-holder"></div>
       </div>
       <div class="payment-structure-body-row" id="crawl">
-      <button class="btn btn-outline-success btn-block mt-5">pay</button>
+      <button class="btn btn-outline-success btn-block mt-5" id="payment-button">pay</button>
       </div>
   </div>
 </div>

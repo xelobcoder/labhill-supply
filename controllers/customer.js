@@ -64,7 +64,7 @@ const customer = {
     // check if is an array
     if (Array.isArray(id)) {
       // loop through array and delete each customer
-      // using a white loop
+      // using a while loop
       let i = 0;
       while (i < id.length) {
         const deleteCustomer = `DELETE FROM customer WHERE id = ${id[i]}`;

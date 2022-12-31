@@ -1,6 +1,6 @@
 window.onload = (ev) => {
   class Table {
-    constructor(columnnumber, columnHeaders, tablename, framework, severending, querymode, uniqueId) {
+    constructor(columnnumber, columnHeaders, tablename, framework, severending, querymode, uniqueId, seachBar) {
       this.column = columnnumber;
       this.columnHeaders = columnHeaders;
       this.tablename = tablename;
@@ -8,6 +8,7 @@ window.onload = (ev) => {
       this.api = querymode || null;
       this.serverRendering = severending || false;
       this.uniqueId = uniqueId || 'id';
+      this.searchBar = seachBar || false;
     }
 
     frontenddata = [];
@@ -41,9 +42,31 @@ window.onload = (ev) => {
     getData = async () => {
       let response = await fetch(this.api);
       let data = await response.json();
-      data.data.forEach((item) => {
-        this.frontenddata.push(item);
-      })
+      // is this.frontend empty
+      if (this.frontenddata.length == 0) {
+        if (data.data.length > 0 && Array.isArray(data.data)) {
+          data.data.forEach((item) => {
+            this.frontenddata.push(item);
+          })
+        }
+      }
+
+      if (this.frontenddata.length > 0) {
+        // check if data is an array using uniqueID
+        if (Array.isArray(data.data) && data.data.length > 0) {
+          // loop through data
+          for (let i = 0; i < data.data.length; i++) {
+            // check if data is in frontenddata
+            let index = this.frontenddata.findIndex((item) => {
+              return item[this.uniqueId] == data.data[i][this.uniqueId];
+            });
+            // if not add to frontenddata
+            if (index == -1) {
+              this.frontenddata.push(data.data[i]);
+            }
+          }
+        }
+      }
       // return
       // this data while used when delete or edit take place 
       // if not the front end dat will alway e used for sorting
@@ -116,9 +139,48 @@ window.onload = (ev) => {
       return span;
     }
 
+    FilteringSearchBar() {
+      if (this.searchBar) {
+        let searchBar = document.createElement('input');
+        searchBar.setAttribute('type', 'text');
+        searchBar.setAttribute('placeholder', 'Search');
+        searchBar.style.height = '40px';
+        // searchBar.parentElement.style.display = 'grid';
+        // searchBar.parentElement.style.gridTemplateColumns = '1fr 1fr';
+        searchBar.classList.add("form-control");
+        searchBar.setAttribute('id', 'searchbar');
+        document.getElementById(this.searchBar).appendChild(searchBar);
+
+        // add event listener
+        searchBar.addEventListener('keyup', (ev) => {
+          let value = ev.target.value.toLowerCase();
+          if (value.length == '') {
+            this.createTableBody(this.frontenddata);
+          }
+          else {
+            //  filter this.frontenddata
+            let filteredData = this.frontenddata.filter((item) => {
+              //  get all keys 
+              let keys = Object.keys(item);
+              if (keys.length == 0) return;
+              // loop through keys
+              for (let i = 0; i < keys.length; i++) {
+                let key = keys[i];
+                let itemValue = item[key].toString().toLowerCase();
+                if (itemValue.includes(value)) {
+                  return item;
+                }
+              }
+            })
+            this.createTableBody(filteredData);
+            return filteredData;
+          }
+        });
+      }
+    }
+
     async sortDataAsc(orderby) {
       let data = [...this.frontenddata];
-      console.log(data);
       // sort string 
       if (typeof data[0][orderby] == 'string') {
         data.sort((a, b) => {
@@ -134,9 +196,11 @@ window.onload = (ev) => {
         })
       }
       // sort number
-      else if (typeof data[0][orderby] == 'number') {
+      else if (typeof parseInt(data[0][orderby]) == 'number') {
         data.sort((a, b) => {
-          return a[orderby] - b[orderby];
+          let lowercaseTest = typeof a[orderby] === 'undefined' ? orderby.toUpperCase() : orderby;
+          let lowercaseTest2 = typeof b[orderby] === 'undefined' ? orderby.toUpperCase() : orderby;
+          return parseInt(a[lowercaseTest]) - parseInt(b[lowercaseTest2]);
         })
       }
       // sort date
@@ -167,9 +231,12 @@ window.onload = (ev) => {
         })
       }
       // sort number desc
-      else if (typeof this.frontenddata[0][orderby] == 'number') {
+      else if (typeof parseInt(this.frontenddata[0][orderby]) == 'number') {
+        // test if in object 
         this.frontenddata.sort((a, b) => {
-          return b[orderby] - a[orderby];
+          let lowercaseTest = typeof a[orderby] === 'undefined' ? orderby.toUpperCase() : orderby;
+          let lowercaseTest2 = typeof b[orderby] === 'undefined' ? orderby.toUpperCase() : orderby;
+          return parseInt(b[lowercaseTest2]) - parseInt(a[lowercaseTest]);
         })
       }
       // sort date desc
@@ -328,6 +395,7 @@ window.onload = (ev) => {
       table.appendChild(tbody)
       // mark row
       this.markRow();
+
     }
 
     markRow() {
@@ -382,8 +450,8 @@ window.onload = (ev) => {
       let table = document.getElementById(this.tablename);
       tfoot.innerHTML = `
           <tr>
-            <td>
-              show
+            <td colspan='1'>
+              Number of rows
             </td>
             <td>
               <select class="form-control" id='tfoot-show-level'>
@@ -397,6 +465,7 @@ window.onload = (ev) => {
                 <option value="1000">1000</option>
               </select>
             </td>
+            <td id='pagination'></td>
           </tr>
     `
       table.appendChild(tfoot);
@@ -406,6 +475,7 @@ window.onload = (ev) => {
         // add event listener
         show.onchange = (ev) => {
           this.footerShowSelect(this.frontenddata);
+
         }
       }
     }
@@ -443,11 +513,35 @@ window.onload = (ev) => {
             id: selectedBox
           })
         })
+        // get thr response
         let data = await response.json();
+        // refresh data
+        await this.getData().then((data) => {
+          this.frontenddata = data;
+          this.createTableBody(data);
+        })
 
-        return;
+        return data;
       }
     }
+
+    createModal() {
+      function createInterimModal() {
+
+      }
+
+      function BoostrapModal(size) {
+
+      }
+
+      if (this.cssFramework == 'bootstrap') {
+        BoostrapModal()
+      }
+      else {
+        createInterimModal();
+      }
+    }
+
 
     createMessageLog(message, type) {
       let table = document.getElementById(this.tablename);
@@ -468,10 +562,6 @@ window.onload = (ev) => {
         tableParent.removeChild(div);
       }, 3000)
       // call create table
-      this.getData()
-        .then((data) => {
-          this.createTableBody(data);
-        })
     }
 
 
@@ -482,6 +572,7 @@ window.onload = (ev) => {
       this.createTableBody(data);
       this.createTableFooter();
       this.markRow();
+      this.FilteringSearchBar();
     }
 
   }
@@ -491,7 +582,7 @@ window.onload = (ev) => {
 
   let models = ['id', 'name', 'email', 'contact', 'address', 'status', 'date', 'actions'];
 
-  let table = new Table(7, models, 'customers', 'bootstrap', true, 'http://localhost:4000/api/v1/customers', 'ID');
+  let table = new Table(7, models, 'customers', 'bootstrap', true, 'http://localhost:4000/api/v1/customers', 'ID', 'seachbarfiltering');
 
   table.createTable();
 

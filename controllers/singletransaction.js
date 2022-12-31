@@ -44,7 +44,14 @@ const renderCart = function (request, response, next) {
        connection.query(mysql,[transactionid],(err,result) => {
         if(err) {throw err}
         information.taxesApplied = result;
+       // get the discount applied to that pacticular transaction
+       let mysql = `SELECT * FROM discountapplied where transactionid =(?)`;
+       connection.query(mysql,[transactionid],(err,result) => {
+        if(err) {throw err}
+        information.discountApplied = result;
+       // send the information to the client
         response.send(information);
+       })
        })
       })
      }
