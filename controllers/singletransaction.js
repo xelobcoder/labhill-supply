@@ -50,7 +50,13 @@ const renderCart = function (request, response, next) {
         if(err) {throw err}
         information.discountApplied = result;
        // send the information to the client
-        response.send(information);
+        // check payment for transation id
+        const sql = `SELECT * FROM payment where transactionid = ?`;
+        connection.query(sql, [transactionid], (err, result) => {
+         if(err) {throw err}
+         information.payment = result;
+         response.send(information);
+        })
        })
        })
       })

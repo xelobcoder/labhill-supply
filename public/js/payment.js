@@ -253,11 +253,18 @@ window.onload = (ev) => {
      }
 
      if (target === 10) {
-      // send to server
-       fetch('/api/v1/payments', {method:'POST', headers: {'content-type':'application/json'},body: JSON.stringify(payment)})
-       .then ( (data) =>  {return data.json()})
-       .then( (data) => console.log(data))
-       .catch ( (err) => console.log(err))
+      if (payment.paidAmount > payment.totalcost) {
+       alert('Please pay the exact amount or less. NB:.NB:Amout paid must be equal to total cost\n' + 'Total cost: ' + payment.totalcost + '\n' + 'Amount paid: ' + payment.paidAmount + '\n' + 'Amount to be paid: ' + payment.totalcost + '\n' + 'Amount to be returned: ' + (parseInt(payment.paidAmount) - parseInt(payment.totalcost) + ' ' + 'GHC')
+       )
+       return
+      }
+      else {
+       // send to server
+       fetch('/api/v1/payments', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payment) })
+        .then((data) => { return data.json() })
+        .then((data) => console.log(data))
+        .catch((err) => console.log(err))
+      }
      }
     }
 
