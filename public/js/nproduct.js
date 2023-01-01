@@ -7,6 +7,7 @@ window.onload = (ev) => {
  const description = document.getElementById('description')
  const message = document.getElementById('message-field');
  const price = document.getElementById('price');
+ const minqty = document.getElementById('minqty');
 
  // on button click
 
@@ -64,6 +65,7 @@ window.onload = (ev) => {
    formData.append('quantity', quantity.value);
    formData.append('description', description.value);
    formData.append('price', price.value);
+   formData.append('minqty',minqty.value)
 
 
    // send data to server

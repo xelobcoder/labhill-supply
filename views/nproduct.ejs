@@ -1,5 +1,5 @@
 <%- include("header.ejs") %> 
-<body>
+<body class="bg-white">
  <div class="container-fluid bg-primary p-4">
   <div class="container">
    <div class="row">
@@ -42,14 +42,23 @@
         <input  type="number" min="0" class="form-control" required id="quantity"/>
        </div>
       </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="">minimum quantiy </label>
+          <input type="number" min="0" claass="form-control" required id="minqty">
+        </div>
+      </div>
       
       <!-- product price -->
       <div class="form-row">
         <div class="form-group">
-          <div class="label">price</div>
-          <input class="form-control" id="price" min="0" required/>
+          <div class="label">unit price </div>
+          <input type="number"  class="form-control" id="price" min="0" required/>
         </div>
       </div>
+
+     
       <!-- product image -->
       <div class="form-row">
        <div class="form-group">

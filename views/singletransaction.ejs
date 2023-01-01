@@ -1,12 +1,12 @@
 <%- include('header.ejs') %> 
-<div class="container-fluid bg-success p-1">
- <div class="container">
-  <div class="row">
-   <div class="col text-lead text-white text-capitalize">
-     <h1>display product</h1>
-   </div>
+<!-- checkout header -->
+<div class="check-out-header">
+  <div class="check-symbol">
+   <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-cart-plus-fill" viewBox="0 0 16 16">
+    <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM9 5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 1 0z"/>
+  </svg>
+  checkout 
   </div>
- </div>
 </div>
 <!-- main cart -->
 
@@ -37,23 +37,23 @@
         <div id="tax"></div>
       </div>
       <div class="payment-structure-body-row">
-        <div id="discount-header">discount</div>
+        <div id="discount-header">Discount</div>
         <div id="discount"></div>
       </div>
       <div class="payment-structure-body-row">
-        <div>total</div>
+        <div>Total</div>
         <div id="total"></div>
         </div>
        </div>
        <!-- pay to -->
        <div class="payment-structure-body-row" id="crawl">
-        <div>pay to</div>
+        <div>Pay to</div>
         <div>
           <input type="text" id="payto" class="form-control" style='height:60px;margin-top: 20px;'>
         </div>
       </div>
       <div class="payment-structure-body-row" id="crawl">
-        <div>payment mode</div>
+        <div >Payment mode</div>
         <div>
           <select class="form-control" id='paymentmethod' style="height:60px;margin-top: 20px;">
             <option value="mobile money">mobile money</option>
@@ -72,7 +72,7 @@
         <div id="payment-field-holder"></div>
       </div>
       <div class="payment-structure-body-row" id="crawl">
-      <button class="btn btn-outline-success btn-block mt-5" id="payment-button">pay</button>
+      <button class="btn btn-success btn-block mt-5" id="payment-button">pay</button>
       </div>
   </div>
 </div>
