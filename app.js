@@ -16,7 +16,7 @@ const AddTransaction = require('./controllers/transactions');
 const renderCart = require('./controllers/singletransaction');
 const customer = require('./controllers/customer');
 const { deleteCustomers, getCustomers } = require('./controllers/customer');
-const {addStock} = require("./controllers/stock.js")
+const {addStock,updateStock} = require("./controllers/stock.js")
 // use cookie parser and express body parser
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -169,4 +169,9 @@ app.get('/addstock',function(request,response) {
 
 app.get('/api/v1/stock', function(request,response) {
   addStock(request,response)
+})
+
+
+app.post('/api/v1/stock', function(request,response) {
+  updateStock(request,response)
 })

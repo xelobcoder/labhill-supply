@@ -8,6 +8,7 @@ window.onload = (ev) => {
   const message = document.getElementById('message-field');
   const price = document.getElementById('price');
   const minqty = document.getElementById('minqty');
+  const nprice = document.getElementById('noprice');
 
   // on button click
 
@@ -65,7 +66,8 @@ window.onload = (ev) => {
       formData.append('quantity', quantity.value);
       formData.append('description', description.value);
       formData.append('price', price.value);
-      formData.append('minqty', minqty.value)
+      formData.append('minqty', minqty.value);
+      formData.append('nprice', nprice.value);
 
 
       // send data to server
@@ -79,6 +81,11 @@ window.onload = (ev) => {
 
     if (!name.value && !quantity.value && !description.value && !price.value) {
       message.innerText = 'fill all field';
+    }
+
+
+    if (nprice.value.length == 0) {
+      alert('fill in price without profit')
     }
 
     if (name.value && quantity.value && description.value && price.value) {

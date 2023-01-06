@@ -793,8 +793,7 @@ input::placeholder {
   text-transform: capitalize;
 }
 
-
-@media screen and (max-width:480px) {
+@media screen and (max-width: 480px) {
   .body-stock {
     margin: 0;
     height: 100vh;
@@ -808,13 +807,13 @@ input::placeholder {
   }
   .body-stock > #headerwrap {
     color: black;
-    font-weight: 600;    
+    font-weight: 600;
   }
   #form-area-parent {
     height: 80vh;
   }
 
-  #form-area-parent  .form-group {
+  #form-area-parent .form-group {
     border: none;
     border-radius: 10px;
     background-color: white;
@@ -822,28 +821,150 @@ input::placeholder {
     padding: 10px;
     margin-top: 10px;
   }
-  
-  #form-area-parent  .form-group > label {
+
+  #form-area-parent .form-group:nth-of-type(1) > input {
+    text-align: left;
+    padding-left: 40px;
+  }
+
+  #form-area-parent .form-group:nth-of-type(1) {
+    height: auto;
+  }
+
+  #form-area-parent .form-group:nth-of-type(1) > label {
+    margin-left: -20px;
+  }
+
+  #form-area-parent .form-group:nth-of-type(1) > svg {
+    position: relative;
+    top: 42px;
+    left: 10px;
+    color: grey;
+  }
+
+  .productlist {
+    height: 40vh !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .productlist > .list-group-item-item > img {
+    width: 50px !important;
+    height: 50px !important;
+    margin-right: 20px;
+  }
+
+  /* #form-area-parent  .form-group:nth-of-type(1) > svg:hover,
+  #form-area-parent  .form-group:nth-of-type(1) > svg:focus,
+  #form-area-parent  .form-group:nth-of-type(1) > svg:active {
+    color: #00224f;
+    display: none;
+  } */
+
+  #form-area-parent .form-group > label {
     color: #00224f;
     font-size: 15px;
   }
-  #form-area-parent  .form-group:nth-of-type(3) {
+  #form-area-parent .form-group:nth-of-type(3) {
     border-radius: none;
     background-color: inherit;
   }
-  #form-area-parent  .form-group:nth-of-type(3) >button {
+  #form-area-parent .form-group:nth-of-type(3) > button {
     width: 100%;
   }
 }
-@media screen and (min-width:480px) {
+
+@media screen and (min-width: 480px) {
+  .body-stock {
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    padding: 0;
+    box-sizing: border-box;
+    color: black;
+    font-size: 20px;
+    overflow: none;
+    background-color: #00224f17;
+  }
+  .body-stock > #headerwrap {
+    color: black;
+    font-weight: 600;
+  }
+  #form-area-parent {
+    height: 80vh;
+  }
+
+  #form-area-parent .form-group {
+    border: none;
+    border-radius: 10px;
+    background-color: white;
+    height: 20vh;
+    padding: 10px;
+    margin-top: 10px;
+  }
+
+  #form-area-parent .form-group:nth-of-type(1) > input {
+    text-align: left;
+    padding-left: 40px;
+  }
+
+  #form-area-parent .form-group:nth-of-type(1) {
+    height: auto;
+  }
+
+  #form-area-parent .form-group:nth-of-type(1) > label {
+    margin-left: -20px;
+  }
+
+  #form-area-parent .form-group:nth-of-type(1) > svg {
+    position: relative;
+    top: 42px;
+    left: 10px;
+    color: grey;
+  }
+
+  .productlist {
+    height: 40vh !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .productlist > .list-group-item-item > img {
+    width: 50px !important;
+    height: 50px !important;
+    margin-right: 20px;
+  }
+
+  /* #form-area-parent  .form-group:nth-of-type(1) > svg:hover,
+  #form-area-parent  .form-group:nth-of-type(1) > svg:focus,
+  #form-area-parent  .form-group:nth-of-type(1) > svg:active {
+    color: #00224f;
+    display: none;
+  } */
+
+  #form-area-parent .form-group > label {
+    color: #00224f;
+    font-size: 15px;
+  }
+  #form-area-parent .form-group:nth-of-type(3) {
+    border-radius: none;
+    background-color: inherit;
+  }
+  #form-area-parent .form-group:nth-of-type(3) > button {
+    width: 100%;
+  }
+
+ 
+}
+
+@media screen and (min-width: 480px) {
   #form-area-parent form {
     display: grid;
     grid-template-columns: 40% 40% auto;
     grid-gap: 20px;
   }
 
-
-  #form-area-parent form >.form-group:nth-of-type(3) > button{
+  /* #form-area-parent form > .form-group:nth-of-type(3) > button {
     margin-top: 30px;
     height: 40px;
     width: 120px;
@@ -859,18 +980,23 @@ input::placeholder {
     height: 40px;
   }
 
-  #form-area-parent input:focus{
+  #form-area-parent input:focus {
     outline: none !important;
     border: 0px !important;
-  }
- 
+  } */
 }
 
+#productsearchedhere {
+  /* display: none; */
+}
 .productlist {
   border: 1px solid lightgray;
   background-color: white;
   border-radius: 5px;
   box-shadow: #00224f 0px 3px 4px;
+  height: 70vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .productlist > .list-group-item-item {
@@ -887,9 +1013,32 @@ input::placeholder {
 
 .productlist > .list-group-item-item:hover,
 .productlist > .list-group-item-item:focus,
-.productlist > .list-group-item-item:active ,
+.productlist > .list-group-item-item:active,
 .productlist-active {
   background-color: #00224f17;
   color: #00224f;
+  cursor: pointer;
+}
+
+#productsearchedhere .productlist {
+  border-radius: 0%;
+  border: none;
+  box-shadow: none;
+}
+
+#productsearchedhere .productlist > .list-group-item-item {
+  font-size: 15px;
+}
+
+.paytobodylist{
+  border: none;margin-top: 20px;
+}
+.paytobodylist > .paytolist {
+  border-bottom: 1px solid lightblue;
+  font-size: 14px;
+  padding: 5px;
+  background-color: whitesmoke;
+  border-radius: 0px;
+  margin-top: 1.5px;
   cursor: pointer;
 }

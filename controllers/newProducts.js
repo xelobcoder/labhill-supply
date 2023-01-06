@@ -9,7 +9,8 @@ const isNumber = function (number) {
 
 // add new products
 const addProduct = function (req, res, imageid, next) {
-	const { name, quantity, description, price,minqty } = req.body;
+	const { name, quantity, description, price, minqty, nprice } = req.body;
+	console.log(req.body);
 
 	if (!name && !quantity && !description) {
 		res.status(404).send('name,quantity and description all required');
@@ -19,9 +20,9 @@ const addProduct = function (req, res, imageid, next) {
 
 		if (isNumber(quantity) && isNumber(price)) {
 			// add data to database;
-			let query = 'INSERT INTO product (NAME,QUANTITY,PRICE,DESCRIPTION,IMAGEID,minqty) VALUES (?,?,?,?,?,?)';
+			let query = 'INSERT INTO product (NAME,QUANTITY,PRICE,DESCRIPTION,IMAGEID,minqty,noprofitprice) VALUES (?,?,?,?,?,?,?)';
 			// connect
-			connection.query(query, [name, quantity, price, description, imageid,minqty], (err, result) => {
+			connection.query(query, [name, quantity, price, description, imageid, minqty, nprice], (err, result) => {
 				if (err) {
 					res.send(err)
 				}

@@ -196,7 +196,7 @@ window.onload = (ev) => {
         function ProvideDeliveryAddress() {
           let input = document.createElement('textarea');
           // set class attriibute
-          input.classList.add('form-control');
+          input.classList.add('form-control','text-dark');
           // add id attru
           input.setAttribute('id', 'deliveryaddress');
           input.style.height = '60px';
@@ -210,7 +210,7 @@ window.onload = (ev) => {
         function ProvidePaymentField() {
           let input = document.createElement('input');
           // set attribute 
-          input.classList.add('form-control', 'payment-field');
+          input.classList.add('form-control', 'payment-field','text-dark');
           // add id
           input.setAttribute('id', 'paymentfield');
           // get payment field;
@@ -218,6 +218,70 @@ window.onload = (ev) => {
           // append child
           paymentField.appendChild(input);
         }
+
+
+        function ProvidePayToQuery() {
+          let payTo = document.getElementById('payto');
+
+          async function getCustomersDaata() {
+            let getdata = await fetch('/api/v1/customers');
+            let response = await getdata.json();
+            return await response;
+          }
+          getCustomersDaata()
+            .then((data) => {
+              let parentBody = document.getElementById('paytoquery');
+              // get payto
+              payTo.addEventListener('keypress', (e) => {
+                let pressedValues = e.target.value;
+                // if value is not null
+                if (data.data.length > 0 && pressedValues.length > 0) {
+                  let customers = data.data;
+                  // filter customers
+                  let filteredData = customers.filter((item, index) => {
+                    return item.name.startsWith(pressedValues)
+                  })
+                  //  transform the data
+                  let TransformedData = filteredData.map((item, index) => {
+                    return `<div class='paytolist' >${item.name}</div>`;
+                  })
+                  // add to parent body
+                  parentBody.style.display = 'block';
+                  parentBody.innerHTML = TransformedData.join('');
+
+
+                  // get all list elements
+
+                  function Getalllist() {
+                    let listitems = document.querySelectorAll('.paytolist');
+                    // loop
+
+                    listitems.forEach((item, index) => {
+                      // add event listener
+                      item.addEventListener('click', function (ev) {
+                        payTo.value = ev.target.innerHTML;
+                        // remove parent body nodes
+                        if (parentBody.hasChildNodes) {
+                          parentBody.style.display = 'none'
+                        } else {
+                          return;
+                        }
+                        let name = ev.target.innerHTML;
+                        let address = customers.find((item) => { return item.name == name }).address;
+                        // get delivery address
+                        document.getElementById('deliveryaddress').innerHTML = address;
+                      })
+                    })
+                  }
+
+                  Getalllist()
+                }
+              })
+            })
+            .catch((err) => { return })
+        }
+
+        ProvidePayToQuery();
 
 
         ProvidePaymentField()
