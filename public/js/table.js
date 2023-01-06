@@ -582,7 +582,7 @@ window.onload = (ev) => {
 
   let models = ['id', 'name', 'email', 'contact', 'address', 'status', 'date', 'actions'];
 
-  let table = new Table(7, models, 'customers', 'bootstrap', true, 'http://localhost:4000/api/v1/customers', 'ID', 'seachbarfiltering');
+  let table = new Table(7, models, 'customers', 'bootstrap', true, '/api/v1/customers', 'ID', 'seachbarfiltering');
 
   table.createTable();
 

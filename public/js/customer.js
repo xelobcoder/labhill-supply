@@ -70,7 +70,7 @@ window.onload = function () {
       }
 
       if (formvalidation) {
-        let endpoint = 'http://localhost:4000/api/v1/customers';
+        let endpoint = '/api/v1/customers';
         let response = await fetch(endpoint, {
           method: 'POST',
           headers: {

@@ -78,7 +78,7 @@ window.onload = (ev) => {
     const parent = createElement();
     // make img first to be resolved 
     let image = parent.firstChild;
-    image.src = `http://localhost:4000/api/v1/image?id=${imagepath}`;
+    image.src = `/api/v1/image?id=${imagepath}`;
     // add selected attrbute to image
     image.setAttribute('selected', 'false');
     // return parent
@@ -101,7 +101,7 @@ window.onload = (ev) => {
    }
 
    async function getDataSource() {
-    let getdata = await fetch('http://localhost:4000/api/v1/product')
+    let getdata = await fetch('/api/v1/product')
     let response = await getdata.json();
     return response;
    }
@@ -290,7 +290,7 @@ window.onload = (ev) => {
      let choice = window.confirm('Are you sure you want to delete this item?')
      if (choice) {
       // send delete request to server
-      let deleteRequest = fetch('http://localhost:4000/api/v1/product', {
+      let deleteRequest = fetch('/api/v1/product', {
        method: 'DELETE',
        headers: {
         'Content-Type': 'application/json'

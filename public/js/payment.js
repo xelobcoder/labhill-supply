@@ -282,7 +282,7 @@ window.onload = (ev) => {
 
       // get data from server
       function getData(transactionid) {
-        fetch(`http://localhost:4000/api/v1/transaction/?transactionid=${transactionid}`)
+        fetch(`/api/v1/transaction/?transactionid=${transactionid}`)
           .then((response) => response.json())
           .then((data) => {
             console.log(data)

@@ -170,7 +170,7 @@ window.onload = (ev) => {
 
   async getTaxData() {
    // get tax data
-   let taxData = await fetch('http://localhost:4000/api/v1/tax?taxtoapply')
+   let taxData = await fetch('/api/v1/tax?taxtoapply')
    let taxDataJson = await taxData.json();
    return taxDataJson;
   }
@@ -394,7 +394,7 @@ window.onload = (ev) => {
 
   initiateTransaction(transaction) {
    // send data to server
-   fetch('http://localhost:4000/transaction', {
+   fetch('/transaction', {
     method: 'POST',
     headers: {
      'Content-Type': 'application/json'
@@ -407,7 +407,7 @@ window.onload = (ev) => {
      // empty the cart
      if (data.status == 'success') {
       this.EmptyCart();
-      window.location.href = `http://localhost:4000/viewtransaction?transactionid=${data.transactionid}`;
+      window.location.href = `/viewtransaction?transactionid=${data.transactionid}`;
      }
     })
     .catch((err) => {

@@ -1,6 +1,12 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+const cors = require('cors');
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}))
 const products = require('./controllers/newProducts');
 const PORT = process.env.PORT || 4000;
 const imageConstruct = require('./controllers/image');
@@ -10,6 +16,7 @@ const AddTransaction = require('./controllers/transactions');
 const renderCart = require('./controllers/singletransaction');
 const customer = require('./controllers/customer');
 const { deleteCustomers, getCustomers } = require('./controllers/customer');
+const {addStock} = require("./controllers/stock.js")
 // use cookie parser and express body parser
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -30,6 +37,7 @@ app.listen(PORT, function (err) { if (err) throw err });
 app.get("/api/v1/product", function (request, response) {
   products.getProduct(request, response);
 })
+
 
 
 const addImage = new imageConstruct('product');
@@ -151,4 +159,14 @@ app.get('/customers', function (request, response) {
 
 app.post('/api/v1/payments', function (request, response) {
   NewPayment(request, response);
+})
+
+
+app.get('/addstock',function(request,response) {
+  response.render('addstock.ejs')
+})
+
+
+app.get('/api/v1/stock', function(request,response) {
+  addStock(request,response)
 })
