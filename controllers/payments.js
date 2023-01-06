@@ -45,6 +45,7 @@ const NewPayment = function (request, response) {
   // check if payment is already made
   CheckPayment(transactionid).then((result) => {
    // if payment is not made
+   console.log(result);
    if (!result) {
     // save payment
     const sql = `INSERT INTO payment (paymentmode,deliveryaddress,amountdue,paymentTo,amountpaid,totalTax,discount,transactionid) VALUES (?,?,?,?,?,?,?,?)`;
@@ -56,7 +57,8 @@ const NewPayment = function (request, response) {
       });
       throw new Error(err);
      }
-     else {
+
+     if (result) {
       response.send({
        status: 'success',
        message: 'Payment added successfully'
@@ -81,7 +83,7 @@ const NewPayment = function (request, response) {
 
  for (let i = 0; i < KEYS.length; i++) {
   let value = request.body[KEYS[i]];
-  if (value == '') {
+  if (value === '') {
    return false;
   }
   else {
@@ -92,6 +94,7 @@ const NewPayment = function (request, response) {
 
  if (target === KEYS.length) {
   SavePayments();
+ 
  }
  else {
   response.send({

@@ -196,7 +196,7 @@ window.onload = (ev) => {
         function ProvideDeliveryAddress() {
           let input = document.createElement('textarea');
           // set class attriibute
-          input.classList.add('form-control','text-dark');
+          input.classList.add('form-control', 'text-dark');
           // add id attru
           input.setAttribute('id', 'deliveryaddress');
           input.style.height = '60px';
@@ -207,10 +207,12 @@ window.onload = (ev) => {
         ProvideDeliveryAddress()
 
 
+
+
         function ProvidePaymentField() {
           let input = document.createElement('input');
           // set attribute 
-          input.classList.add('form-control', 'payment-field','text-dark');
+          input.classList.add('form-control', 'payment-field', 'text-dark');
           // add id
           input.setAttribute('id', 'paymentfield');
           // get payment field;
@@ -221,6 +223,28 @@ window.onload = (ev) => {
 
 
         function ProvidePayToQuery() {
+          function Getalllist(parentBody, customers) {
+            let listitems = document.querySelectorAll('.paytolist');
+            // loop
+
+            listitems.forEach((item, index) => {
+              // add event listener
+              item.addEventListener('click', function (ev) {
+                payTo.value = ev.target.innerHTML;
+                // remove parent body nodes
+                if (parentBody.hasChildNodes()) {
+                  parentBody.style.display = 'none'
+                } else {
+                  return;
+                }
+                let name = ev.target.innerHTML;
+                let address = customers.find((item) => { return item.name == name }).address;
+                // get delivery address
+                document.getElementById('deliveryaddress').innerHTML = address;
+              })
+            })
+          }
+
           let payTo = document.getElementById('payto');
 
           async function getCustomersDaata() {
@@ -248,33 +272,7 @@ window.onload = (ev) => {
                   // add to parent body
                   parentBody.style.display = 'block';
                   parentBody.innerHTML = TransformedData.join('');
-
-
-                  // get all list elements
-
-                  function Getalllist() {
-                    let listitems = document.querySelectorAll('.paytolist');
-                    // loop
-
-                    listitems.forEach((item, index) => {
-                      // add event listener
-                      item.addEventListener('click', function (ev) {
-                        payTo.value = ev.target.innerHTML;
-                        // remove parent body nodes
-                        if (parentBody.hasChildNodes) {
-                          parentBody.style.display = 'none'
-                        } else {
-                          return;
-                        }
-                        let name = ev.target.innerHTML;
-                        let address = customers.find((item) => { return item.name == name }).address;
-                        // get delivery address
-                        document.getElementById('deliveryaddress').innerHTML = address;
-                      })
-                    })
-                  }
-
-                  Getalllist()
+                  Getalllist(parentBody, customers);
                 }
               })
             })
@@ -299,8 +297,10 @@ window.onload = (ev) => {
             subtotal: transactions[0].totalcost,
             tax: CalculateTotalTax(),
             total: parseInt(calculateTotalCost()),
-            discount: discountdisplay(discountApplied),
+            discount: discountdisplay(discountApplied) || 0,
           }
+
+          console.log(payment)
 
           let target = 0;
 
@@ -325,7 +325,32 @@ window.onload = (ev) => {
               // send to server
               fetch('/api/v1/payments', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payment) })
                 .then((data) => { return data.json() })
-                .then((data) => console.log(data))
+                .then((data) => {
+                  if (data.status == 'info') {
+                    alert(data.message);
+                    // window.location.href = '/dashboard';
+                  }
+
+                  if (data.status == 'success') {
+                    alert(data.message);
+                    // create a dialog 
+                    let question = confirm('Do you want to print an invoice?');
+                    if (question) {
+                      // print invoice
+                      window.print();
+                    }
+                    else {
+                      let questionEmail = confirm('Do you want to send an invoice to the customer via Email?');
+
+                      if (questionEmail) {
+                        // send email
+                        console.log('send email')
+                      } else {
+                        window.location.href = '/';
+                      }
+                    }
+                  }
+                })
                 .catch((err) => console.log(err))
             }
           }
