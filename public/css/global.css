@@ -1042,3 +1042,91 @@ input::placeholder {
   margin-top: 1.5px;
   cursor: pointer;
 }
+
+/* makes a side bar  */
+#transactions-split {
+  display: grid;
+  grid-template-columns: 15% 85%;
+  width: 100vw;
+  height: 100vh;
+}
+
+
+#transactions-split > .sidebar-transactions {
+  margin: 0px;
+  padding: 0px;
+  background-color:whitesmoke;
+  outline-color: invert;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-right: 1px solid lightgray;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1) ;
+}
+
+.sidebar-transactions > ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+
+.sidebar-transactions > ul > li {
+  padding: 10px;
+  border-bottom: 1px solid lightgray;
+  cursor: pointer;
+  text-align: left;
+  padding-left: 30px;
+  font-size: 18px;
+  color: #00224f;
+}
+
+
+.sidebar-transactions > ul > li > a::first-letter {
+  text-transform:uppercase;
+}
+
+
+.sidebar-transactions > ul > li > a{
+  text-decoration: none !important;
+  color: #00224f;
+  margin-right: 60px !important;
+}
+
+
+.sidebar-transactions > ul > li > svg {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.header-top-transactions {
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  background-color: 
+  #FFC107;
+  height: 50px;
+  display: grid;
+  grid-template-columns: 15% 85%;
+}
+
+.header-top-transactions > .menu {
+  margin-left: 10%;
+  color: white;
+}
+
+.header-top-transactions > .menu > svg {
+  width: 30px;
+  height: 30px;
+  margin-top: 10px;
+  margin-left: 10px;
+  color: white;
+}
+.header-top-transactions > .sid {
+  margin-left: 0%;
+  color: white;
+  font-size: 20px;
+  margin-top: 10px;
+  text-transform: uppercase;
+}

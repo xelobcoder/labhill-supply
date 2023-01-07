@@ -1,0 +1,54 @@
+{
+ "sqltools.connections": [
+  {
+   "mysqlOptions": {
+    "authProtocol": "default"
+   },
+   "previewLimit": 50,
+   "server": "localhost",
+   "port": 3306,
+   "driver": "MariaDB",
+   "name": "localhost",
+   "database": "db_lhs",
+   "username": "root"
+  },
+  {
+   "mysqlOptions": {
+    "authProtocol": "default"
+   },
+   "previewLimit": 50,
+   "server": "localhost",
+   "port": 3306,
+   "driver": "MySQL",
+   "name": "localhost",
+   "database": "db_lhs",
+   "username": "root"
+  },
+  {
+   "mysqlOptions": {
+    "authProtocol": "default"
+   },
+   "previewLimit": 50,
+   "server": "localhost",
+   "port": 3306,
+   "driver": "MySQL",
+   "name": "localhost",
+   "database": "db_lhs",
+   "username": "root",
+   "password": ""
+  },
+  {
+   "mysqlOptions": {
+    "authProtocol": "default"
+   },
+   "previewLimit": 50,
+   "server": "localhost",
+   "port": 3306,
+   "driver": "MySQL",
+   "name": "lhs",
+   "database": "db_lhs",
+   "username": "root",
+   "password": ""
+  }
+ ]
+}

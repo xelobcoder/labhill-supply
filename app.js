@@ -16,7 +16,9 @@ const AddTransaction = require('./controllers/transactions');
 const renderCart = require('./controllers/singletransaction');
 const customer = require('./controllers/customer');
 const { deleteCustomers, getCustomers } = require('./controllers/customer');
-const {addStock,updateStock} = require("./controllers/stock.js")
+const { addStock, updateStock } = require("./controllers/stock.js");
+const connection = require('./controllers/db');
+const sales = require('./controllers/sales');
 // use cookie parser and express body parser
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -162,16 +164,47 @@ app.post('/api/v1/payments', function (request, response) {
 })
 
 
-app.get('/addstock',function(request,response) {
+app.get('/addstock', function (request, response) {
   response.render('addstock.ejs')
 })
 
 
-app.get('/api/v1/stock', function(request,response) {
-  addStock(request,response)
+app.get('/api/v1/stock', function (request, response) {
+  addStock(request, response)
 })
 
 
-app.post('/api/v1/stock', function(request,response) {
-  updateStock(request,response)
+app.post('/api/v1/stock', function (request, response) {
+  updateStock(request, response)
+})
+
+
+app.get('/api/v1/payment/transactions', function (request, response) {
+  // sql query statement 
+  let sql = `SELECT * from transactions as t INNER JOIN (SELECT * from payment) as p WHERE t.transactionid = p.transactionid`;
+  connection.query(sql,
+    function (err, result) {
+      if (err) {
+        response.send({
+          statusCode: 404,
+          message: err.message,
+          status: 'error'
+        })
+      }
+      response.send(result)
+    })
+})
+
+
+app.get('/transactions', function (request, response) {
+  response.render('transactions.ejs')
+})
+
+
+
+app.get('/api/v1/sales', function (request, response, next) {
+  const range = request.query.range;
+  if (range && range === 'daily') {
+    sales.dailySales(request, response, next);
+  }
 })
