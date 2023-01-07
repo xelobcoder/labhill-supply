@@ -953,8 +953,6 @@ input::placeholder {
   #form-area-parent .form-group:nth-of-type(3) > button {
     width: 100%;
   }
-
- 
 }
 
 @media screen and (min-width: 480px) {
@@ -1030,8 +1028,9 @@ input::placeholder {
   font-size: 15px;
 }
 
-.paytobodylist{
-  border: none;margin-top: 20px;
+.paytobodylist {
+  border: none;
+  margin-top: 20px;
 }
 .paytobodylist > .paytolist {
   border-bottom: 1px solid lightblue;
@@ -1051,17 +1050,16 @@ input::placeholder {
   height: 100vh;
 }
 
-
 #transactions-split > .sidebar-transactions {
   margin: 0px;
   padding: 0px;
-  background-color:whitesmoke;
+  background-color: whitesmoke;
   outline-color: invert;
   height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
   border-right: 1px solid lightgray;
-  transition: cubic-bezier(0.075, 0.82, 0.165, 1) ;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .sidebar-transactions > ul {
@@ -1069,7 +1067,6 @@ input::placeholder {
   margin: 0px;
   padding: 0px;
 }
-
 
 .sidebar-transactions > ul > li {
   padding: 10px;
@@ -1081,18 +1078,15 @@ input::placeholder {
   color: #00224f;
 }
 
-
 .sidebar-transactions > ul > li > a::first-letter {
-  text-transform:uppercase;
+  text-transform: uppercase;
 }
 
-
-.sidebar-transactions > ul > li > a{
+.sidebar-transactions > ul > li > a {
   text-decoration: none !important;
   color: #00224f;
   margin-right: 60px !important;
 }
-
 
 .sidebar-transactions > ul > li > svg {
   width: 30px;
@@ -1104,11 +1098,10 @@ input::placeholder {
   width: 100vw;
   margin: 0;
   padding: 0;
-  background-color: 
-  #FFC107;
+  background-color: #ffc107;
   height: 50px;
   display: grid;
-  grid-template-columns: 15% 85%;
+  grid-template-columns: 10% 90%;
 }
 
 .header-top-transactions > .menu {
@@ -1129,4 +1122,100 @@ input::placeholder {
   font-size: 20px;
   margin-top: 10px;
   text-transform: uppercase;
+}
+#expenses-form {
+  width: 100%;
+  height: auto;
+  background-color: white;
+  padding: 20px;
+  margin-right: 50px;
+  margin-top: 10px;
+}
+
+#expenses-form > .form-group {
+  display: grid;
+  grid-template-columns: 30% 30% 30% auto;
+  grid-gap: 10px;
+}
+
+#expenses-form > .form-group > button {
+  width: 100%;
+  height: 50px;
+  background-color: #00224f;
+  color: white;
+  border-radius: 0px;
+  margin-top: 5px;
+  border: 0px;
+  text-transform: capitalize;
+}
+
+#section-sales {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+  padding: 20px;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.default-card {
+  background-color: white;
+  border: 1px solid lightgray;
+  height: 20vh;
+  cursor: pointer;
+
+}
+.default-card > .default-card-header{
+  height: 20%;
+  padding: 10px;
+  color: black;
+  text-transform: capitalize;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+}
+
+.default-card > .default-card-body{
+  height: 80%;
+  padding: 10px;
+  color: black;
+  text-transform: capitalize;
+  font-size: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#section-sales > .default-card:hover,
+#section-sales > .default-card:focus,
+#section-sales > .default-card:active{
+  color: #00224f;
+  cursor: pointer;
+}
+
+.default-card-body-hover{
+  color: #00224f;
+  display: none;
+  background-color: whitesmoke;
+  border: 1px solid lightgray;
+}
+
+.default-card-body-hover.active > #flash-hot{
+  padding: 10px;
+  margin: 0px 10% 0px 10%;
+}
+
+#flash-hot > #flash-hot-child {
+  display: grid;
+  grid-template-columns: 30% auto;
+  margin: 0px 4% 0 4%;
+  font-weight: 300;
+  font-size: 20px;
+}
+
+.main-bar-transactions {
+  background-color: #00224f32;
 }

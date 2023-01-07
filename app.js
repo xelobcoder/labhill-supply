@@ -207,4 +207,23 @@ app.get('/api/v1/sales', function (request, response, next) {
   if (range && range === 'daily') {
     sales.dailySales(request, response, next);
   }
+
+  if (range && range === 'weekly') {
+    sales.weeklySales(request, response, next);
+  }
+
+  if (range && range === 'monthly') {
+    sales.MonthlySales(request, response, next);
+  }
+
+  if (range && range === 'yearly') {
+    sales.yearlySales(request, response, next);
+  }
+
+  if(range && range === 'weeklychart'){
+    sales.weeklyChart(request, response, next);
+  }
 })
+
+
+
