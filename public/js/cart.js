@@ -393,26 +393,32 @@ window.onload = (ev) => {
   }
 
   initiateTransaction(transaction) {
-   // send data to server
-   fetch('/transaction', {
-    method: 'POST',
-    headers: {
-     'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(transaction)
-   })
-    .then((res) => res.json())
-    .then((data) => {
-     console.log(data);
-     // empty the cart
-     if (data.status == 'success') {
-      this.EmptyCart();
-      window.location.href = `/viewtransaction?transactionid=${data.transactionid}`;
-     }
+   if (transaction.discount > transaction.totalCost) {
+    alert('discount cannot be greater than the amount due');
+    return;
+   } else {
+    // send data to server
+    fetch('/transaction', {
+     method: 'POST',
+     headers: {
+      'Content-Type': 'application/json'
+     },
+     body: JSON.stringify(transaction)
     })
-    .catch((err) => {
-     console.log(err);
-    })
+     .then((res) => res.json())
+     .then((data) => {
+      console.log(data);
+      // empty the cart
+      if (data.status == 'success') {
+       this.EmptyCart();
+       window.location.href = `/viewtransaction?transactionid=${data.transactionid}`;
+      }
+     })
+     .catch((err) => {
+      console.log(err);
+     })
+   }
+
   }
 
 

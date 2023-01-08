@@ -67,9 +67,18 @@
     
    </div>
 </section>
-<section>
- <canvas id="myChart" style="width:100%;max-width:700px;margin-left: 30px;"></canvas>
-</section>
+  <section id="second-section-sales">
+    <div class="header-chart">
+      <select name="chart-select" id="chart-select" class="form-control">
+        <option value="count">count</option>
+        <option value="amount">amount</option>
+      </select>
+    </div>
+    <div class="weekly-section">
+      <canvas id="weeklyChart" ></canvas>
+      <canvas id="monthlyChart" ></canvas>
+    </div>
+  </section>
 <script
 src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
 </script>

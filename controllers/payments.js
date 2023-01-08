@@ -1,5 +1,8 @@
+const {response} = require('express');
 const connection = require('./db');
 
+
+// redue stock after transaction have been made
 
 // Update the payment Records 
 function UpdatePayment(request, response) {
@@ -10,6 +13,37 @@ function UpdatePayment(request, response) {
    status: 'success',
    message: 'payment updated'
   })
+ })
+}
+
+
+
+function ReduceStockAfterPayment(transactionid) {
+ let sql = `SELECT * FROM cart WHERE transactionid = ?`;
+ connection.query(sql, [transactionid], (err, result) => {
+  if (err) { return }
+  if (result.length == 0) { return }
+  if (result.length > 0) {
+   let target = 0;
+   while (target < result.length) {
+    let productid = result[target].productid;
+    let quantity = result[target].quantity;
+    let sql = `SELECT * FROM product WHERE productid = ?`;
+    connection.query(sql, [productid], function (err, result) {
+     if (err) { throw err }
+     let availableStockQty = result[0].quantity;
+     let purchasedQuantity = quantity;
+     let newStockQty = availableStockQty - purchasedQuantity;
+     let sql = `UPDATE product SET quantity = ? WHERE productid = ?`;
+     connection.query(sql, [newStockQty, productid], function (err, result) {
+      if (err) { throw err }
+      console.log('stock updated', console.table(result));
+     })
+    })
+
+    target++;
+   }
+  }
  })
 }
 
@@ -59,6 +93,7 @@ const NewPayment = function (request, response) {
      }
 
      if (result) {
+      ReduceStockAfterPayment(transactionid);
       response.send({
        status: 'success',
        message: 'Payment added successfully'
@@ -94,7 +129,7 @@ const NewPayment = function (request, response) {
 
  if (target === KEYS.length) {
   SavePayments();
- 
+
  }
  else {
   response.send({
@@ -106,4 +141,5 @@ const NewPayment = function (request, response) {
 
 
 
-module.exports = { NewPayment, UpdatePayment }
+
+module.exports = {NewPayment,UpdatePayment}

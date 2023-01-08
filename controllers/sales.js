@@ -120,6 +120,7 @@ sales.weeklyChart = function (request, response) {
             category.wednesday.push(item);
             break;
           case 4:
+            console.log(item);
             category.thursday.push(item);
             break;
           case 5:
@@ -142,7 +143,7 @@ sales.weeklyChart = function (request, response) {
           let total = { count: 0, amount: 0 }
           for (let i = 0; i < data.length; i++) {
             total.count += 1;
-            total.amount += data[i].amountpaid;
+            total.amount += data[i].amountdue;
           }
           return total;
         }
