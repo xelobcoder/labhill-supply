@@ -18,6 +18,7 @@ const customer = require('./controllers/customer');
 const { deleteCustomers, getCustomers } = require('./controllers/customer');
 const { addStock, updateStock } = require("./controllers/stock.js");
 const connection = require('./controllers/db');
+const orders = require('./controllers/order');
 const sales = require('./controllers/sales');
 // use cookie parser and express body parser
 app.use(express.json())
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, './public/')))
 app.use(express.static(path.join(__dirname, './public/css')))
 app.use(express.static(path.join(__dirname, './public/js')))
 app.use(express.static(path.join(__dirname, './public/assert')))
+
 
 // setting view engine
 app.set('view engine', 'ejs')
@@ -220,10 +222,24 @@ app.get('/api/v1/sales', function (request, response, next) {
     sales.yearlySales(request, response, next);
   }
 
-  if(range && range === 'weeklychart'){
+  if (range && range === 'weeklychart') {
     sales.weeklyChart(request, response, next);
+  }
+
+  if (range && range === 'monthlychart') {
+    sales.monthlyChart(request, response, next);
+  }
+
+  if (range && range === 'yearlychart') {
+    sales.yearlyChart(request, response, next);
   }
 })
 
 
 
+
+
+app.get('/api/v1/orders', function (request, response) {
+  console.log(request.query)
+  orders(request, response)
+})

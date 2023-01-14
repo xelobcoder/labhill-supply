@@ -50,8 +50,10 @@ function QueryRun(sqlQuery, response) {
         },
         data: result
       })
+
     }
   )
+
 }
 
 
@@ -166,6 +168,194 @@ sales.weeklyChart = function (request, response) {
         data: dataset,
         labels: ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
       })
+    }
+  })
+}
+
+
+
+sales.monthlyChart = function (request, response) {
+  // weekly query
+  let sqlQuery = `SELECT * FROM payment WHERE MONTH(DATE) = MONTH(CURRENT_DATE) AND YEAR(DATE) = YEAR(CURRENT_DATE)`;
+  connection.query(sqlQuery, function (err, result) {
+    if (err) {
+      response.send({
+        status: "error",
+        message: err.message,
+        statusCode: 404
+      })
+    }
+
+    if (result) {
+      let category = {
+        firstWeek: [],
+        secondWeek: [],
+        thirdWeek: [],
+        fourthWeek: [],
+      };
+
+      result.forEach((item, index) => {
+        let date = new Date(item.date).getDate();
+        if (date <= 7) {
+          category.firstWeek.push(item);
+        }
+        else if (date > 7 && date <= 14) {
+          category.secondWeek.push(item);
+        }
+        else if (date > 14 && date <= 21) {
+          category.thirdWeek.push(item);
+        }
+        else if (date > 21) {
+          category.fourthWeek.push(item);
+        }
+      });
+
+      // reduce the category data for each day
+      function reducerFunction(data = []) {
+        if (data.length == 0) {
+          return 0;
+        }
+        else {
+          let total = { count: 0, amount: 0 }
+          for (let i = 0; i < data.length; i++) {
+            total.count += 1;
+            total.amount += data[i].amountdue;
+          }
+          return total;
+        }
+      }
+
+      let dataset = {};
+
+      dataset.firstWeek = reducerFunction(category.firstWeek);
+      dataset.secondWeek = reducerFunction(category.secondWeek);
+      dataset.thirdWeek = reducerFunction(category.thirdWeek);
+      dataset.fourthWeek = reducerFunction(category.fourthWeek);
+
+      response.send({
+        status: "success",
+        message: "monthly sales",
+        statusCode: 200,
+        data: dataset,
+        labels: ["first week", "second week", "third week", "fourth week"]
+      })
+    }
+  })
+}
+
+
+
+sales.yearlyChart = function (request, response) {
+  // yearly chart 
+  let sqlQuery = `SELECT * FROM payment WHERE YEAR(DATE) = YEAR(CURRENT_DATE)`;
+  connection.query(sqlQuery, function (err, result) {
+    if (err) {
+      response.send({
+        status: "error",
+        message: err.message,
+        statusCode: 404
+      })
+    }
+
+    if (result) {
+      let category = {
+        january: [],
+        february: [],
+        march: [],
+        april: [],
+        may: [],
+        june: [],
+        july: [],
+        august: [],
+        september: [],
+        october: [],
+        november: [],
+        december: []
+      };
+
+      result.forEach((item, index) => {
+        let date = new Date(item.date).getMonth();
+        switch (date) {
+          case 0:
+            category.january.push(item);
+            break;
+          case 1:
+            category.february.push(item);
+            break;
+          case 2:
+            category.march.push(item);
+            break;
+          case 3:
+            category.april.push(item);
+            break;
+          case 4:
+            category.may.push(item);
+            break;
+          case 5:
+            category.june.push(item);
+            break;
+          case 6:
+            category.july.push(item);
+            break;
+          case 7:
+            category.august.push(item);
+            break;
+          case 8:
+            category.september.push(item);
+            break;
+          case 9:
+            category.october.push(item);
+            break;
+          case 10:
+            category.november.push(item);
+            break;
+          case 11:
+            category.december.push(item);
+            break;
+          default:
+            break;
+        }
+      });
+
+      // reduce the category data for each day
+      function reducerFunction(data = []) {
+        if (data.length == 0) {
+          return 0;
+        }
+        else {
+          let total = { count: 0, amount: 0 }
+          for (let i = 0; i < data.length; i++) {
+            total.count += 1;
+            total.amount += data[i].amountdue;
+          }
+          return total;
+        }
+      }
+
+      let dataset = {};
+
+      dataset.january = reducerFunction(category.january);
+      dataset.february = reducerFunction(category.february);
+      dataset.march = reducerFunction(category.march);
+      dataset.april = reducerFunction(category.april);
+      dataset.may = reducerFunction(category.may);
+      dataset.june = reducerFunction(category.june);
+      dataset.july = reducerFunction(category.july);
+      dataset.august = reducerFunction(category.august);
+      dataset.september = reducerFunction(category.september);
+      dataset.october = reducerFunction(category);
+
+      dataset.november = reducerFunction(category.november);
+      dataset.december = reducerFunction(category.december);
+
+      response.send({
+        status: "success",
+        message: "yearly sales",
+        statusCode: 200,
+        data: dataset,
+        labels: ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
+      })
+      
     }
   })
 }

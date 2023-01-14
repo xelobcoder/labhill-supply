@@ -1,0 +1,104 @@
+<section id="order-query-section">
+  <div class="form-group">
+    <!-- order date -->
+    <label for="orderDate">Order Date</label>
+    <input type="date" class="form-control" id="orderdate" name="orderDate" placeholder="Order Date">
+   </div>
+   <!-- customer name -->
+   <div class="from-group">
+    <label for="customerName">Customer Name</label>
+    <input type="text" class="form-control" id="customerName" name="customerName" placeholder="Customer Name">
+   </div>
+   <!-- transactionid -->
+   <div class="form-group">
+    <label for="transactionId">Transaction ID</label>
+    <input type="number" class="form-control" id="transactionid" name="transactionId" placeholder="Transaction ID">
+   </div>
+  <!-- billing address -->
+  <div class="form-group">
+    <label for="billingAddress">Billing Address</label>
+    <input type="text" class="form-control" id="billingAddress" name="billingAddress" placeholder="Billing Address">
+  </div>
+  <!-- taxable -->
+  <div class="form-group">
+    <label for="taxable">Taxable</label>
+  <input type="radio" id="taxable" name="taxable" value="taxable">
+  </div>
+  <!-- button query -->
+  <button class="btn btn-danger text-capitalize" id="buttonQuery">query</button>
+</section>
+<section id="order-client-details">
+  <h3>client details</h3>
+ <div id="clients-detail">
+  <div class="flags">
+    <label for="clientName">Client Name</label>
+     <p>Tiifu Hamza</p>
+  </div>
+  <!-- email address -->
+  <div class="flags">
+    <label for="emailAddress">Email Address</label>
+    <p>
+      <a href="mailto:">
+
+      </a>
+    </p>
+  </div>
+  <!-- phone number -->
+  <div class="flags">
+    <label for="phoneNumber">Phone Number</label>
+    <p>
+      <a href="tel:">
+
+      </a>
+    </p>
+  </div>
+  <!-- address -->
+  <div class="flags">
+    <label for="address">Address</label>
+    <p></p>
+  </div>
+ </div>
+</section>
+<section id="order-cart-item">
+  <button class="btn btn-light text-capitalize">add item</button>
+  <h4>order items</h4>
+  <div id="cart-items">
+    <table id="cart-table" class="table">
+      <thead class="table-stripped table-dark">
+        <tr>
+          <th>Item</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>item</td>
+          <td>quantity</td>
+          <td>price</td>
+          <td>total</td>
+        </tr>
+        <tr>
+          <td>item</td>
+          <td>quantity</td>
+          <td>price</td>
+          <td>total</td>
+        </tr>
+        <tr>
+          <td>item</td>
+          <td>quantity</td>
+          <td>price</td>
+          <td>total</td>
+        </tr>
+        <tr>
+          <td>item</td>
+          <td>quantity</td>
+          <td>price</td>
+          <td>total</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<script src="/order.js"></script>

@@ -74,9 +74,18 @@
         <option value="amount">amount</option>
       </select>
     </div>
-    <div class="weekly-section">
-      <canvas id="weeklyChart" ></canvas>
-      <canvas id="monthlyChart" ></canvas>
+    <div style="display: grid; grid-template-columns: 40% 40%; background-color: white;margin-bottom: 700px;">
+      <div class="weekly-section" >
+        <canvas id="weeklyChart" height="400px"width='400px'></canvas>
+      </div>
+      <div >
+        <canvas id="monthlyChart" height="400px"width='400px'></canvas>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <canvas id="yearlyChart" height="400px" width="400px"></canvas>
     </div>
   </section>
 <script

@@ -1132,7 +1132,6 @@ input::placeholder {
   text-transform: uppercase;
 }
 
-
 #expenses-form {
   width: 100%;
   height: auto;
@@ -1174,9 +1173,8 @@ input::placeholder {
   border: 1px solid lightgray;
   height: 20vh;
   cursor: pointer;
-
 }
-.default-card > .default-card-header{
+.default-card > .default-card-header {
   height: 20%;
   padding: 10px;
   color: black;
@@ -1188,7 +1186,7 @@ input::placeholder {
   border-bottom: 1px solid lightgray;
 }
 
-.default-card > .default-card-body{
+.default-card > .default-card-body {
   height: 80%;
   padding: 10px;
   color: black;
@@ -1201,21 +1199,21 @@ input::placeholder {
 
 #section-sales > .default-card:hover,
 #section-sales > .default-card:focus,
-#section-sales > .default-card:active{
+#section-sales > .default-card:active {
   color: #00224f;
   height: auto;
   transition: cubic-bezier(0.6, 0.04, 0.98, 0.335);
   cursor: pointer;
 }
 
-.default-card-body-hover{
+.default-card-body-hover {
   color: #00224f;
   display: none;
   background-color: whitesmoke;
   border: 1px solid lightgray;
 }
 
-.default-card-body-hover.active > #flash-hot{
+.default-card-body-hover.active > #flash-hot {
   padding: 10px;
   margin: 0px 10% 0px 10%;
 }
@@ -1230,4 +1228,106 @@ input::placeholder {
 
 .main-bar-transactions {
   background-color: #00224f32;
+  height: 100vh;
+}
+
+#second-section-sales {
+  width: 94%;
+  height: auto;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 10% auto;
+  margin-right: 100px;
+  margin-left: 40px;
+  padding: 0;
+}
+#second-section-sales > .header-chart {
+  width: 49%;
+}
+
+.weekly-section{
+  background-color: white;
+}
+
+
+#order-search{
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  grid-gap: 30px;
+  margin-right: 20px;
+  background-color: white;
+  padding: 10px 10px;
+}
+
+#order-search> .form-group:nth-of-type(5){
+  margin-top: 30px;
+}
+
+
+#order-query-section {
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  margin-right: 50px;
+  padding-top: 0px;
+  padding-right:30px;
+  padding-left:30px;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-gap: 10px;
+}
+
+#order-query-section {
+  background-color: whitesmoke;
+}
+
+#order-client-details,#order-cart-item{
+  background-color: white;
+}
+
+#order-client-details{
+  margin: 0;
+  padding: 20px;
+}
+
+#order-client-details >#clients-detail{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-gap: 10px;
+}
+
+#order-client-details > h3 {
+  text-transform: uppercase;
+  font-size: 20px;
+  color: #00224f;
+  background-color: white;
+  width: 20%;
+  padding: 10px;
+}
+
+#order-client-details >#clients-detail > .flags {
+  display: flex;
+  justify-content: flex-start;
+}
+
+#order-client-details >#clients-detail > .flags > label {
+  color: #00224f;
+}
+
+#order-client-details >#clients-detail > .flags > label::after {
+  content: ': ';
+}
+
+#order-client-details >#clients-detail > .flags > p {
+  margin-left: 20px;
+}
+
+
+#order-cart-item{
+  margin: 0;
+  padding: 20px;
+  max-height: 40vh;
+  overflow-y: auto;
+  font-size: 15px;
 }

@@ -580,22 +580,22 @@ window.onload = (ev) => {
 
 
 
-  let models = ['id', 'name', 'email', 'contact', 'address', 'status', 'date', 'actions'];
+  // let models = ['id', 'name', 'email', 'contact', 'address', 'status', 'date', 'actions'];
 
-  let table = new Table(7, models, 'customers', 'bootstrap', true, '/api/v1/customers', 'ID', 'seachbarfiltering');
+  // let table = new Table(7, models, 'customers', 'bootstrap', true, '/api/v1/customers', 'ID', 'seachbarfiltering');
 
-  table.createTable();
+  // table.createTable();
 
 
-  let deleteicon = document.getElementById('deletetrash');
+  // let deleteicon = document.getElementById('deletetrash');
 
-  deleteicon.addEventListener('click', function () {
-    table.serverSideDeleting()
-      .then((data) => {
-        table.createMessageLog('Customers deleted successfully', 'success');
-      })
-      .catch((err) => {
-        table.createMessageLog('Error deleting customers', 'danger');
-      })
-  })
+  // deleteicon.addEventListener('click', function () {
+  //   table.serverSideDeleting()
+  //     .then((data) => {
+  //       table.createMessageLog('Customers deleted successfully', 'success');
+  //     })
+  //     .catch((err) => {
+  //       table.createMessageLog('Error deleting customers', 'danger');
+  //     })
+  // })
 }
