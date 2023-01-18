@@ -41,23 +41,23 @@ const renderCart = function (request, response, next) {
        information.product = result;
        // get tax applied to that pacticular transaction
        let mysql = `SELECT * FROM taxapplied where transactionid =(?)`;
-       connection.query(mysql,[transactionid],(err,result) => {
-        if(err) {throw err}
+       connection.query(mysql, [transactionid], (err, result) => {
+        if (err) { throw err }
         information.taxesApplied = result;
-       // get the discount applied to that pacticular transaction
-       let mysql = `SELECT * FROM discountapplied where transactionid =(?)`;
-       connection.query(mysql,[transactionid],(err,result) => {
-        if(err) {throw err}
-        information.discountApplied = result;
-       // send the information to the client
-        // check payment for transation id
-        const sql = `SELECT * FROM payment where transactionid = ?`;
-        connection.query(sql, [transactionid], (err, result) => {
-         if(err) {throw err}
-         information.payment = result;
-         response.send(information);
+        // get the discount applied to that pacticular transaction
+        let mysql = `SELECT * FROM discountapplied where transactionid =(?)`;
+        connection.query(mysql, [transactionid], (err, result) => {
+         if (err) { throw err }
+         information.discountApplied = result;
+         // send the information to the client
+         // check payment for transation id
+         const sql = `SELECT * FROM payment where transactionid = ?`;
+         connection.query(sql, [transactionid], (err, result) => {
+          if (err) { throw err }
+          information.payment = result;
+          response.send(information);
+         })
         })
-       })
        })
       })
      }
