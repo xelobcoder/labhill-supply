@@ -53,7 +53,13 @@ const queryOrder = function (request, response) {
             transactionHistory.payment = result;
 
             // get cart transactionHistory
-            let query = `SELECT * FROM cart WHERE transactionid = '${transactionid}'`;
+            let query = `SELECT * FROM product
+            AS p 
+            INNER JOIN
+            (SELECT quantity,totalcost,cartid,transactionid,productid FROM cart) as c
+            ON p.productid = c.productid
+            WHERE c.transactionid = '${transactionid}'
+            `
             connection.query(query, (err, result) => {
               if (err) {
                 console.log(err);

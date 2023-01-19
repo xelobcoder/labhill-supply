@@ -1330,4 +1330,31 @@ input::placeholder {
   max-height: 40vh;
   overflow-y: auto;
   font-size: 15px;
+  display: none;
+}
+
+#order-client-details {
+  display: none;
+  background-color: aliceblue;
+}
+
+
+.payment-section,
+.taxes-list {
+  background-color: aliceblue;
+  padding: 20px;
+  margin: 0;
+  color: #00224f;
+  width: 100%;
+  display: none;
+}
+
+.payment-section > #ph{
+  background-color: #00224f;
+  color: white;
+  margin: 0;
+}
+
+.taxes-list{
+  background-color: whitesmoke;
 }

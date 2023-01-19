@@ -43,16 +43,20 @@ window.onload = (ev) => {
 
 
     AppendCartProducts(cart) {
+      let cartpanel = document.getElementById("order-cart-item");
+      cartpanel.style.display = 'block';
+
       if (cart.length == 0) {
         return `<tr> <td colspan='4'> No products found </td> </tr>`
       }
       else {
-        let cartProducts = cart.map((product) => {
+        let cartProducts = cart.map((product, index) => {
           return `<tr>
-          <td>${product.productid}</td>
-          <td>${product.productname}</td>
+          <td>${index + 1}</td>
+          <td>${product.name}</td>
           <td>${product.quantity}</td>
           <td>${product.price}</td>
+          <td>${product.totalcost}</td>
           </tr>`
         })
 
@@ -65,16 +69,119 @@ window.onload = (ev) => {
 
     AppendClientDetails(clientDetails) {
       let textBasedNodes = document.querySelectorAll('.-xxx');
+      // clear all children 
+      textBasedNodes.forEach((node) => {
+        node.innerHTML = '';
+      })
+      // make visible
+      let clientDetailSection = document.getElementById("order-client-details");
+      clientDetailSection.style.display = 'block';
+      // append to the DOM
       let client = textBasedNodes[0];
       let email = textBasedNodes[1];
       let phone = textBasedNodes[2];
       let address = textBasedNodes[3];
-      const { clientName, clientEmail, ClientPhone } = clientDetails;
+      const { clientName, clientEmail, clientPhone, clientAddress } = clientDetails;
       client.innerHTML = clientName;
-      email.innerHTML = clientEmail;
-      phone.innerHTML = ClientPhone;
+      email.innerHTML = clientEmail || 'Not provided';
+      phone.innerHTML = clientPhone || 'Not provided';
+      address.innerHTML = clientAddress || 'Not provided';
     }
 
+
+    AppendFinancialDetails(financialDetails) {
+      // create a nice list of the finacual payment details
+      const { amountdue, amountpaid, discount, paymentmode, totalTax } = financialDetails;
+      let balancedue = amountdue - amountpaid;
+
+      let totalcost = `<div> Total cost: ${amountdue} </div>`;
+
+      let paidAmount = `<div> Paid amount: ${amountpaid} </div>`;
+
+      let discounted = `<div> Discount: ${discount} </div>`;
+
+      let balance = `<div> Balance: ${balancedue} </div>`;
+
+      let tax = `<div> Total Tax Applied: ${totalTax} </div>`;
+
+      let paymentMethod = `<div> Payment method: ${paymentmode} </div>`;
+
+      // append to the DOM
+      let paymentSection = document.querySelector('.payment-section');
+      // clear the section
+      paymentSection.innerHTML = '';
+      // make it visible
+      paymentSection.style.display = 'block';
+      // append the data
+
+      // payment section header
+      let paymentSectionHeader = `<div class='text-center' id='ph'> Payment details </div>`;
+      paymentSection.innerHTML = paymentSectionHeader +
+        totalcost + paidAmount + discounted + balance + paymentMethod +
+        tax;
+
+
+      let paySectChildren = paymentSection.children;
+
+      // add class to each child
+      for (let i = 0; i < paySectChildren.length; i++) {
+        paySectChildren[i].classList.add('text-left');
+      }
+
+      // if amount due is greater than amount paid, then add a class to the balance
+      if (balancedue > 0) {
+        paySectChildren[4].classList.add('text-warning');
+      }
+
+      if (balancedue < 0) {
+        paySectChildren[4].classList.add('text-danger');
+      }
+    }
+
+
+    AppendTaxlist(taxlist) {
+      let taxSection = document.querySelector(".taxes-list");
+      taxSection.style.display = 'block';
+
+      if (taxlist.length == 0) {
+        return `<div> No taxes applied </div>`
+      }
+      else {
+        // tax header
+        let taxHeader = `<div class='text-center' id='th'> Taxes applied </div>`;
+        let taxList = taxlist.map((tax, index) => {
+          return `<div> ${tax.taxname}: ${tax.rate} </div>`
+        })
+
+        // append to table body
+        taxSection.innerHTML = taxHeader + taxList.join('');
+      }
+
+    }
+
+
+    AppendAllData(data) {
+      let cart = data.transactionHistory.cart;
+      let paymentDetails = data.transactionHistory.payment;
+      let taxApplied = data.transactionHistory.taxapplied;
+      let discountDetails = data.transactionHistory.discount;
+
+      let order = new orders;
+      order.AppendCartProducts(cart);
+
+      // append client details
+      const { paymentTo, deliveryaddress, email, phone } = paymentDetails[0];
+
+      let clientDetails = {
+        clientName: paymentTo,
+        clientEmail: email,
+        ClientPhone: phone || null,
+        clientAddress: deliveryaddress || null
+      }
+      order.AppendClientDetails(clientDetails);
+      order.AppendFinancialDetails(paymentDetails[0]);
+      order.AppendTaxlist(taxApplied);
+    }
 
 
 
@@ -89,7 +196,32 @@ window.onload = (ev) => {
         }
         )
         .then((data) => {
-          console.log(data);
+          if (data.status === 'success') {
+            let order = new orders;
+            let mkq = document.querySelector("#mkq");
+            mkq.style.display = 'none';
+            order.AppendAllData(data);
+            console.log(data.transactionHistory);
+          }
+          else {
+            alert(data.message);
+            //  make the payment section invisible
+            let paymentSection = document.querySelector('.payment-section');
+            paymentSection.style.display = 'none';
+            // make the client details section invisible
+            let clientDetailSection = document.getElementById("order-client-details");
+            clientDetailSection.style.display = 'none';
+            // make the tax section invisible
+            let taxSection = document.querySelector(".taxes-list");
+            taxSection.style.display = 'none';
+            // make the cart section invisible
+            let cartSection = document.querySelector("#order-cart-item");
+            cartSection.style.display = 'none';
+            // create default view
+            let mkq = document.querySelector("#mkq");
+            mkq.style.display = 'block';
+            mkq.innerHTML = `<h4 class='text-center mt-0 p-5 bg-white text-danger'> No order found </h4>`;
+          }
         }
         )
         .catch((err) => { console.log(err) })
@@ -108,5 +240,6 @@ window.onload = (ev) => {
     else {
       carryGo();
     }
+
   })
 }

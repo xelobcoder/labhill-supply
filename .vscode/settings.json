@@ -62,6 +62,19 @@
    "database": "db_lhs",
    "username": "root",
    "password": ""
+  },
+  {
+   "mysqlOptions": {
+    "authProtocol": "default"
+   },
+   "previewLimit": 50,
+   "server": "localhost",
+   "port": 3306,
+   "driver": "MySQL",
+   "name": "pos",
+   "database": "db_lhs",
+   "username": "root",
+   "password": ""
   }
  ]
 }
