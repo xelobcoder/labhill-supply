@@ -1143,7 +1143,7 @@ input::placeholder {
 
 #expenses-form > .form-group {
   display: grid;
-  grid-template-columns: 30% 30% 30% auto;
+  grid-template-columns: 1fr 1fr 1fr  ;
   grid-gap: 10px;
 }
 

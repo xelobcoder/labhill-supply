@@ -39,6 +39,18 @@
       <div class="form-group">
        <input type="number" class="form-control" id="expenseAmount" name="expenseAmount" placeholder="Enter expense amount">
       </div>
+      <!-- category -->
+      <div class="form-group">
+       <select name="category" style="height: 50px;" id="expenseCategory" class="form-control mt-1">
+         <option value="food">Food</option>
+         <option value="clothing">Clothing</option>
+         <option value="transport">Transport</option>
+         <option value="entertainment">Entertainment</option>
+         <option value="education">Education</option>
+         <option value="health">Health</option>
+         <option value="other">Other</option>
+       </select>
+      </div>
       <div class="form-group">
        <input type="date" class="form-control" id="expenseDate" name="expenseDate" placeholder="Enter expense date">
       </div>
@@ -48,10 +60,21 @@
      </div>
     </div>
 </section>
-<section id="query-expense-section" class="d-none" >
+<section id="query-expense-section" class="d-none bg-white p-4" >
   <div class="container-fluid">
     <div class="row">
-      <div class="col">
+      <div class="col-3">
+        <select name="categoryquery" id="querycategoryupload" class="form-control">
+          <option value="food">Food</option>
+          <option value="clothing">Clothing</option>
+          <option value="transport">Transport</option>
+          <option value="entertainment">Entertainment</option>
+          <option value="education">Education</option>
+          <option value="health">Health</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="col-9">
         <input type="search" name="query" id="queryexpesen" class="form-control" placeholder=" query using name of expense ">
       </div>
     </div>

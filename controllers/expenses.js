@@ -8,23 +8,20 @@ const addExpense = async (req, res) => {
  const expenseName = expenseObject.expenseName;
  // get expense amount
  const expenseAmount = parseInt(expenseObject.expenseAmount);
-
- // check if expense date is empty
- if (expenseDate === "") {
-  return;
- }
+ // get expenseCategory
+ const expenseCategory = expenseObject.expenseCategory;
 
  // check if expense name is empty
- if (expenseName === "" || expenseName === undefined || expenseName === null || expenseName === NaN || expenseAmount === "") {
+ if (expenseName === "" || expenseDate == '' || expenseName === undefined || expenseName === null || expenseName === NaN || expenseAmount === "") {
   res.send({
    status: 'incomplete',
-   message: "Expense name and amount cannot be empty",
+   message: "Expense name ,date and amount cannot be empty",
    statusCode: 400
   })
   return;
  } else {
   // add expense to database
-  const query = `INSERT INTO expenses (expenseDate, expenseName, expenseAmount) VALUES ('${expenseDate}', '${expenseName}', '${expenseAmount}')`;
+  const query = `INSERT INTO expenses (expenseName, expenseDate, expenseAmount, category) VALUES ('${expenseName}', '${expenseDate}', '${expenseAmount}', '${expenseCategory}')`;
   connection
    .query(query, function (err, result) {
     if (err) {
