@@ -1,4 +1,32 @@
-<section>
+<%- include('header.ejs') %>
+<div class="container-fluid bg-warning p-2 text-white">
+  <div class="container">
+    <div class="row ">
+      <div class="col-6">
+        <h4 style="padding: 10px;">Expenses</h4>
+      </div>
+      <div class="col d-flex justify-content-space-around">
+         <ul class="expense-top-props" style="list-style-type: none;">
+           <li >chart</li>
+           <li class="top-query">query</li>
+           <li class="top-add">add expense</li>
+         </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt-2">
+  <div class="row">
+    <ul>
+      <select name="range" id="range" class="form-control">
+        <option value="today">Today</option>
+        <option value="week">Week</option>
+        <option value="month">Month</option>
+      </select>
+    </ul>
+  </div>
+</div>
+<section id="adding-expense">
  <!-- add expenses -->
  <div class="container-fluid">
   <div class="row">
@@ -14,10 +42,37 @@
       <div class="form-group">
        <input type="date" class="form-control" id="expenseDate" name="expenseDate" placeholder="Enter expense date">
       </div>
-      <button type="button" class="btn btn-primary">Submit</button>
+      <button type="button" id="expensebutton" class="btn btn-primary">Submit</button>
     </form>
       </div>
      </div>
     </div>
 </section>
+<section id="query-expense-section" class="d-none" >
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <input type="search" name="query" id="queryexpesen" class="form-control" placeholder=" query using name of expense ">
+      </div>
+    </div>
+  </div>
+</section>
+<section class="expense-list bg-white p-4 mt-3">
+<table class="table" style="width: 100%;" id="expense-list-table">
+  <thead>
+    <tr>
+      <th>Expense Name</th>
+      <th>Expense Amount</th>
+      <th>Expense Date</th>
+      <th>
+        Action
+      </th>
+    </tr>
+  </thead>
+  <tbody id="expense-list-table-body">
+
+  </tbody>
+</table>
+</section>
+<script src="/table.js"></script>
 <script src="/expense.js"></script>

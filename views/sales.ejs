@@ -1,3 +1,12 @@
+<div class="container-fluid bg-warning p-4 text-white">
+<div class="container">
+  <div class="row">
+  <div class="col">
+    <h4>Sales chart</h4>
+  </div>
+</div>
+</div>
+</div>
 <%- include('header.ejs') %>
 <section id="section-sales">
   <div class="default-card">
@@ -74,7 +83,7 @@
         <option value="amount">amount</option>
       </select>
     </div>
-    <div style="display: grid; grid-template-columns: 40% 40%; background-color: white;margin-bottom: 700px;">
+    <div style="display: grid; grid-template-columns: 50% 50%; background-color: white;margin-bottom: 700px;">
       <div class="weekly-section" >
         <canvas id="weeklyChart" height="400px"width='400px'></canvas>
       </div>
@@ -84,7 +93,7 @@
     </div>
   </section>
   <section>
-    <div class="container">
+    <div class="container bg-white p-4">
       <canvas id="yearlyChart" height="400px" width="400px"></canvas>
     </div>
   </section>

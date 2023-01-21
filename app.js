@@ -19,6 +19,7 @@ const { deleteCustomers, getCustomers } = require('./controllers/customer');
 const { addStock, updateStock } = require("./controllers/stock.js");
 const connection = require('./controllers/db');
 const orders = require('./controllers/order');
+const {addExpense,getExpenses,deleteExpense}= require('./controllers/expenses');
 const sales = require('./controllers/sales');
 // use cookie parser and express body parser
 app.use(express.json())
@@ -242,4 +243,31 @@ app.get('/api/v1/sales', function (request, response, next) {
 app.get('/api/v1/orders', function (request, response) {
   console.log(request.query)
   orders(request, response)
+})
+
+
+
+
+app.get('/sales', function(request,response) {
+  response.render('sales.ejs')
+})
+
+app.get('/expenses', function(request,response) {
+  response.render('expenses.ejs')
+})
+
+
+
+app.get('/api/v1/expenses', function (request, response) {
+  if (Object.keys(request.query).length > 0) {
+    addExpense(request, response)
+  } else {
+    getExpenses(request, response)
+  }
+})
+
+
+app.delete('/api/v1/expenses', function (request, response) {
+  const expenseid = request.body.expenseid;
+  deleteExpense(request, response, expenseid)
 })
