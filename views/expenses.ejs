@@ -7,7 +7,7 @@
       </div>
       <div class="col d-flex justify-content-space-around">
          <ul class="expense-top-props" style="list-style-type: none;">
-           <li >chart</li>
+           <li class="top-chart">chart</li>
            <li class="top-query">query</li>
            <li class="top-add">add expense</li>
          </ul>
@@ -64,7 +64,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-3">
-        <select name="categoryquery" id="querycategoryupload" class="form-control">
+        <select name="categoryquery" tabindex="5" id="querycategoryupload" class="form-control">
           <option value="food">Food</option>
           <option value="clothing">Clothing</option>
           <option value="transport">Transport</option>
@@ -75,7 +75,7 @@
         </select>
       </div>
       <div class="col-9">
-        <input type="search" name="query" id="queryexpesen" class="form-control" placeholder=" query using name of expense ">
+        <input type="search" tabindex="6" name="query" id="queryexpesen" class="form-control" placeholder=" query using name of expense ">
       </div>
     </div>
   </div>
@@ -97,5 +97,19 @@
   </tbody>
 </table>
 </section>
-<script src="/table.js"></script>
+<section id="chart-section" class="d-none">
+<div class="container-fluid mt-5">
+  <div class="row" style="background-color: whitesmoke; margin: 0% 1.5%;display:grid ; grid-template-columns: 100%;">
+    <canvas id="myChart" height="400px" style="background-color: white;padding: 20px;">
+
+    </canvas>
+    <canvas id="myMonthChart" style="background-color:white; margin-top: 20px;padding: 20px;" height="400px">
+
+    </canvas>
+  </div>
+</div>
+</section>
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
 <script src="/expense.js"></script>

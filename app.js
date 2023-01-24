@@ -19,7 +19,7 @@ const { deleteCustomers, getCustomers } = require('./controllers/customer');
 const { addStock, updateStock } = require("./controllers/stock.js");
 const connection = require('./controllers/db');
 const orders = require('./controllers/order');
-const {addExpense,getExpenses,deleteExpense}= require('./controllers/expenses');
+const {addExpense,getExpenses,deleteExpense,getWeeklyExpenseChart,getMonthlyExpenseChart}= require('./controllers/expenses');
 const sales = require('./controllers/sales');
 // use cookie parser and express body parser
 app.use(express.json())
@@ -67,7 +67,7 @@ app.get('/viewproducts', function (request, response) {
 
 // get all product
 app.get('/tax', function (request, response) {
-  response.render('transactions.ejs')
+  response.render('tax.ejs')
 })
 
 
@@ -270,4 +270,15 @@ app.get('/api/v1/expenses', function (request, response) {
 app.delete('/api/v1/expenses', function (request, response) {
   const expenseid = request.body.expenseid;
   deleteExpense(request, response, expenseid)
+})
+
+
+app.get('/api/v1/expenses/chart', function (request, response) {
+   if (request.query.range && request.query.range === 'weekly') {
+    getWeeklyExpenseChart(request, response)
+  }
+
+  if (request.query.range && request.query.range === 'monthly') {
+    getMonthlyExpenseChart(request, response)
+  }
 })

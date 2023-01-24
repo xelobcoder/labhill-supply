@@ -194,7 +194,7 @@ window.onload = function (ev) {
         const ctx = document.getElementById('monthlyChart').getContext('2d');
 
         const myChart = new Chart(ctx, {
-          type: 'pie',
+          type: 'bar',
           data: {
             labels: chartLabels.map((item, index) => {
               return item.toUpperCase()
