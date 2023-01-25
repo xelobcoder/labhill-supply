@@ -21,8 +21,55 @@
   </div>
  </div>
  <div class="main">
+   <section class="product-details">
+    <div class="product-image">
+     <img src="/api/v1/image?id=1674479867713-177207111.jpg" alt="">
+    </div>
+    <div class="product-info">
+     <div class="product-name">
+      <h3>Apple iPhone 11 Pro Max (64GB) - Midnight Green</h3>
+     </div>
+     <div class="product-price">
+      <h4>Price: $1,099.00</h4>
+     </div>
+     <div class="product-category">
+      <h4>Category: Electronics</h4>
+     </div>
+     <div class="product-quantity">
+      <h5>Quantity Available: 1</h5>
+     </div> 
+     <div class="product-description">
+      <h4>Description: The iPhone 11 Pro Max is a smartphone designed, developed, and marketed by Apple Inc. It is the thirteenth generation of the iPhone, succeeding the iPhone XS Max. It was announced on September 10, 2019, alongside the iPhone 11 and iPhone 11 Pro, at the Steve Jobs Theater in the Apple Park campus. It was released on September 20, 2019, in the United States, Canada, the United Kingdom, France, Germany, Ireland, Italy, Japan, Spain, Australia, and other countries.</h4>
+     </div>
+   </section>
+   <section class="product-orders bg-white p-3 mt-3">
+   <table class="table table-striped" id="orders-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>date</th>
+        <th>transactionid</th>
+        <th>quantity</th>
+        <th>total</th>
+      </tr>
+    </thead>
+    <tbody>
 
+     </tbody>
+   </table>
+   </section>
+  <section id="chart-weekly" class="bg-white mt-3" style="height: 400px;">
+   
+  </section>
+  <section id="chart-monthly" class="bg-white mt-3" style="height: 400px;">
+
+  </section>
+  <section id="chart-yearly" class="bg-white mt-3" style="height: 400px;">
+   </section>
+   
  </div>
 </div>
-
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
 <script src="/productstatistic.js"></script>

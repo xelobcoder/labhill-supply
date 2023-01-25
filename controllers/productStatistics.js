@@ -98,14 +98,44 @@ const productStatistics = function (request, response) {
               let saturday = result.filter((order) => {
                return new Date(order.date).getDay() === 6;
               })
+
+              console.log(sunday, monday, tuesday, wednesday, thursday, friday, saturday);
               stats.weekstats = {
-               sunday,
-               monday,
-               tuesday,
-               wednesday,
-               thursday,
-               friday,
-               saturday
+               sunday: {
+                count: sunday.length,
+                quantity: sunday.reduce((a, b) => a + b.quantity, 0),
+                total: sunday.reduce((a, b) => a + b.totalcost, 0)
+               },
+               monday: {
+                count: monday.length,
+                quantity: monday.reduce((a, b) => a + b.quantity, 0),
+                total: monday.reduce((a, b) => a + b.totalcost, 0)
+               },
+               tuesday: {
+                count: tuesday.length,
+                quantity: tuesday.reduce((a, b) => a + b.quantity, 0),
+                total: tuesday.reduce((a, b) => a + b.totalcost, 0)
+               },
+               wednesday: {
+                count: wednesday.length,
+                quantity: wednesday.reduce((a, b) => a + b.quantity, 0),
+                total: wednesday.reduce((a, b) => a + b.totalcost, 0)
+               },
+               thursday: {
+                count: thursday.length,
+                quantity: thursday.reduce((a, b) => a + b.quantity, 0),
+                total: thursday.reduce((a, b) => a + b.totalcost, 0)
+               },
+               friday: {
+                count: friday.length,
+                quantity: friday.reduce((a, b) => a + b.quantity, 0),
+                total: friday.reduce((a, b) => a + b.totalcost, 0)
+               },
+               saturday: {
+                count: saturday.length,
+                quantity: saturday.reduce((a, b) => a + b.quantity, 0),
+                total: saturday.reduce((a, b) => a + b.totalcost, 0)
+               }
               }
               inMonths();
              }
@@ -135,10 +165,27 @@ const productStatistics = function (request, response) {
                return new Date(order.date).getDate() > 21;
               })
               stats.monthstats = {
-               firstweek,
-               secondweek,
-               thirdweek,
-               fourthweek
+               firstweek: {
+                count: firstweek.length,
+                quantity: firstweek.reduce((a, b) => a + b.quantity, 0),
+                total: firstweek.reduce((a, b) => a + b.totalcost, 0)
+               },
+               secondweek: {
+                count: secondweek.length,
+                quantity: secondweek.reduce((a, b) => a + b.quantity, 0),
+                total: secondweek.reduce((a, b) => a + b.totalcost, 0)
+               },
+               thirdweek: {
+                count: thirdweek.length,
+                quantity: thirdweek.reduce((a, b) => a + b.quantity, 0),
+                total: thirdweek.reduce((a, b) => a + b.totalcost, 0)
+
+               },
+               fourthweek: {
+                count: fourthweek.length,
+                quantity: fourthweek.reduce((a, b) => a + b.quantity, 0),
+                total: fourthweek.reduce((a, b) => a + b.totalcost, 0)
+               }
               }
               inYear();
              }
@@ -191,18 +238,66 @@ const productStatistics = function (request, response) {
                return new Date(order.date).getMonth() === 11;
               })
               stats.yearstats = {
-               january,
-               february,
-               march,
-               april,
-               may,
-               june,
-               july,
-               august,
-               september,
-               october,
-               november,
-               december
+               january: {
+                count: january.length,
+                quantity: january.reduce((a, b) => a + b.quantity, 0),
+                total: january.reduce((a, b) => a + b.totalcost, 0)
+               },
+               february: {
+                count: february.length,
+                quantity: february.reduce((a, b) => a + b.quantity, 0),
+                total: february.reduce((a, b) => a + b.totalcost, 0)
+               },
+               march: {
+                count: march.length,
+                quantity: march.reduce((a, b) => a + b.quantity, 0),
+                total: march.reduce((a, b) => a + b.totalcost, 0)
+               },
+               april: {
+                count: april.length,
+                quantity: april.reduce((a, b) => a + b.quantity, 0),
+                total: april.reduce((a, b) => a + b.totalcost, 0)
+               },
+               may: {
+                count: may.length,
+                quantity: may.reduce((a, b) => a + b.quantity, 0),
+                total: may.reduce((a, b) => a + b.totalcost, 0)
+               },
+               june: {
+                count: june.length,
+                quantity: june.reduce((a, b) => a + b.quantity, 0),
+                total: june.reduce((a, b) => a + b.totalcost, 0)
+               },
+               july: {
+                count: july.length,
+                quantity: july.reduce((a, b) => a + b.quantity, 0),
+                total: july.reduce((a, b) => a + b.totalcost, 0)
+               },
+               august: {
+                count: august.length,
+                quantity: august.reduce((a, b) => a + b.quantity, 0),
+                total: august.reduce((a, b) => a + b.totalcost, 0)
+               },
+               september: {
+                count: september.length,
+                quantity: september.reduce((a, b) => a + b.quantity, 0),
+                total: september.reduce((a, b) => a + b.totalcost, 0)
+               },
+               october: {
+                count: october.length,
+                quantity: october.reduce((a, b) => a + b.quantity, 0),
+                total: october.reduce((a, b) => a + b.totalcost, 0)
+               },
+               november: {
+                count: november.length,
+                quantity: november.reduce((a, b) => a + b.quantity, 0),
+                total: november.reduce((a, b) => a + b.totalcost, 0)
+               },
+               december: {
+                count: december.length,
+                quantity: december.reduce((a, b) => a + b.quantity, 0),
+                total: december.reduce((a, b) => a + b.totalcost, 0)
+               }
               }
               response.send({
                status: 'success',
