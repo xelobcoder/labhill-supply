@@ -19,7 +19,8 @@ const { deleteCustomers, getCustomers } = require('./controllers/customer');
 const { addStock, updateStock } = require("./controllers/stock.js");
 const connection = require('./controllers/db');
 const orders = require('./controllers/order');
-const {addExpense,getExpenses,deleteExpense,getWeeklyExpenseChart,getMonthlyExpenseChart}= require('./controllers/expenses');
+const { addExpense, getExpenses, deleteExpense, getWeeklyExpenseChart, getMonthlyExpenseChart } = require('./controllers/expenses');
+const {productStatistics} = require('./controllers/productStatistics');
 const sales = require('./controllers/sales');
 // use cookie parser and express body parser
 app.use(express.json())
@@ -248,11 +249,11 @@ app.get('/api/v1/orders', function (request, response) {
 
 
 
-app.get('/sales', function(request,response) {
+app.get('/sales', function (request, response) {
   response.render('sales.ejs')
 })
 
-app.get('/expenses', function(request,response) {
+app.get('/expenses', function (request, response) {
   response.render('expenses.ejs')
 })
 
@@ -274,11 +275,37 @@ app.delete('/api/v1/expenses', function (request, response) {
 
 
 app.get('/api/v1/expenses/chart', function (request, response) {
-   if (request.query.range && request.query.range === 'weekly') {
+  if (request.query.range && request.query.range === 'weekly') {
     getWeeklyExpenseChart(request, response)
   }
 
   if (request.query.range && request.query.range === 'monthly') {
     getMonthlyExpenseChart(request, response)
+  }
+})
+
+
+
+app.get('/productstatistic', function (request, response) {
+  response.render('productstatistics.ejs')
+})
+
+
+
+app.get('/api/v1/productstatistic', function (request, response) {
+  if (request.query.productid) {
+    productStatistics(request, response)
+  }
+  else {
+    connection.query(`SELECT * FROM product`, function (err, result) {
+      if (err) {
+        response.send({
+          statusCode: 404,
+          message: err.message,
+          status: 'error'
+        })
+      }
+      response.send(result)
+    })
   }
 })
