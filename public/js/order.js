@@ -11,24 +11,43 @@ window.onload = (ev) => {
     foundCustomersList(data) {
       // create a nice list of customers
       let customerListParent = document.createElement("div");
-      // add class
-      customerListParent.classList.add('list-group');
-      // create child elements function
-      function createChildElements(customer) {
-        let child = document.createElement('list-group-item');
-        return child;
-      }
-      // append child elements to parent
-      if (data.length === 0) {
+      
+      if (data.length == 0) {
         return `<div> No customers found </div>`
       }
       else {
-        data.forEach((customer) => {
-          customerListParent.appendChild(createChildElements(customer));
-        })
 
-        return customerListParent;
+        // add class
+      customerListParent.classList.add('list-group-list-group');
+      // create child elements function
+      let datelement = document.createElement("div");
+      let namelement = document.createElement("div");
+      let addresslement = document.createElement("div");
+      let viewbtn = document.createElement("button");
+
+      // add class to each child
+      datelement.classList.add('list-group-item-list');
+      namelement.classList.add('list-group-item-list');
+      addresslement.classList.add('list-group-item-list');
+      viewbtn.classList.add('btn', 'btn-primary', 'float-right');
+      viewbtn.setAttribute('id','viewbtn');
+
+
+      // append the data
+      datelement.innerHTML = data.date;
+      namelement.innerHTML = data.paymentTo;
+      addresslement.innerHTML = data.transactionid;
+      viewbtn.innerHTML = 'View';
+
+      // append the children to the parent
+      customerListParent.appendChild(datelement);
+      customerListParent.appendChild(namelement);
+      customerListParent.appendChild(addresslement);
+      customerListParent.appendChild(viewbtn);
+
+      return customerListParent;
       }
+
     }
 
 
@@ -36,8 +55,16 @@ window.onload = (ev) => {
       let customFoundSection = document.getElementById("customFoundSection");
 
       if (customFoundSection) {
-        customFoundSection.remove();
-        customFoundSection.appendChild(this.foundCustomersList(data));
+        // clear the section
+        customFoundSection.innerHTML = '';
+        // make it visible
+        customFoundSection.style.display = 'block';
+
+        // append the data
+        data.forEach((customer) => {
+          customFoundSection.appendChild(this.foundCustomersList(customer));
+        })
+  
       }
     }
 
@@ -204,23 +231,49 @@ window.onload = (ev) => {
             console.log(data.transactionHistory);
           }
           else {
-            alert(data.message);
-            //  make the payment section invisible
-            let paymentSection = document.querySelector('.payment-section');
-            paymentSection.style.display = 'none';
-            // make the client details section invisible
-            let clientDetailSection = document.getElementById("order-client-details");
-            clientDetailSection.style.display = 'none';
-            // make the tax section invisible
-            let taxSection = document.querySelector(".taxes-list");
-            taxSection.style.display = 'none';
-            // make the cart section invisible
-            let cartSection = document.querySelector("#order-cart-item");
-            cartSection.style.display = 'none';
-            // create default view
-            let mkq = document.querySelector("#mkq");
-            mkq.style.display = 'block';
-            mkq.innerHTML = `<h4 class='text-center mt-0 p-5 bg-white text-danger'> No order found </h4>`;
+
+            console.log(data)
+            if (data.status === 'incomplete' && data.data) {
+              let datalist = data.data;
+              if (datalist.length === 0) {
+                alert('No data found');
+                 //  make the payment section invisible
+                 let paymentSection = document.querySelector('.payment-section');
+                 paymentSection.style.display = 'none';
+                 // make the client details section invisible
+                 let clientDetailSection = document.getElementById("order-client-details");
+                 clientDetailSection.style.display = 'none';
+                 // make the tax section invisible
+                 let taxSection = document.querySelector(".taxes-list");
+                 taxSection.style.display = 'none';
+                 // make the cart section invisible
+                 let cartSection = document.querySelector("#order-cart-item");
+                 cartSection.style.display = 'none';
+                 // create default view
+                 let mkq = document.querySelector("#mkq");
+                 mkq.style.display = 'block';
+                 mkq.innerHTML = `<h4 class='text-center mt-0 p-5 bg-white text-danger'> No order found </h4>`;
+
+              } else {
+                // remove block of mkq if it exists
+                let mkq = document.querySelector("#mkq");
+                mkq.style.display = 'none';
+                let order = new orders;
+                order.AppendCustomerList(datalist);
+              }
+            }
+            else if (data.status === 'incomplete' && !data.data) {
+              // remove custom found children
+              let customerFound = document.querySelector("#customFoundSection");
+              customerFound.innerHTML = '';
+              // display not found message
+              let mkq = document.querySelector("#mkq");
+              mkq.style.display = 'block';
+              mkq.innerHTML = `<h4 class='text-center mt-0 p-5 bg-white text-danger'> No order found </h4>`;
+              
+            } else {
+              alert(data.message);
+            }
           }
         }
         )

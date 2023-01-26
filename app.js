@@ -309,3 +309,8 @@ app.get('/api/v1/productstatistic', function (request, response) {
     })
   }
 })
+
+
+app.get('/suppliers', function(request,response) {
+  response.render('suppliers.ejs')
+})

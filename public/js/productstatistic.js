@@ -18,9 +18,7 @@ window.onload = (ev) => {
   }
 
 
-  const inWeekChart = (data) => { }
-  const inMonthChart = (data) => { }
-  const inYearChart = (data) => { }
+
 
   const productDetails = (data) => {
    const { productid, name, price, quantity, minqty, imageid, description } = data.product;

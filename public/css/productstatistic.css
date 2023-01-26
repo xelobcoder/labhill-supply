@@ -3,6 +3,7 @@
   grid-template-columns: 20% auto;
   grid-template-rows: 100vh;
   background-color: #00224f30;
+  /* overflow: hidden; */
 }
 
 .product-statistic > .sidebar {
@@ -29,7 +30,10 @@
   cursor: pointer;
 }
 .product-details,
-.product-orders {
+.product-orders,
+#chart-weekly,
+#chart-monthly,
+#chart-yearly {
   background-color: white;
   margin-right: 20px;
   margin-top: 80px;

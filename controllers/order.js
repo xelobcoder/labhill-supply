@@ -129,11 +129,37 @@ const queryOrder = function (request, response) {
         data: result,
       })
     })
+  } else if (orderObject.transactionid === '' && orderObject.customerName === '' && orderObject.orderdate != '') {
+    // query by orderdate
+    let query = `SELECT * FROM payment WHERE date = '${orderObject.orderdate}'`;
+    // execute query
+    connection.query(query, (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      response.send({
+        status: 'incomplete',
+        data: result,
+      })
+    })
+  } else if (orderObject.customerName != '' && orderObject.orderdate != '') {
+    // query by orderdate and customerName
+    let query = `SELECT * FROM payment WHERE paymentTo = '${orderObject.customerName}' AND date = '${orderObject.orderdate}'`;
+    // execute query
+    connection.query(query, (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      response.send({
+        status: 'incomplete',
+        data: result,
+      })
+    })
   }
   else {
     response.send({
       status: 'error',
-      message: 'Please enter a valid value',
+      message: 'No order found',
       statusCode: 200
     })
   }
